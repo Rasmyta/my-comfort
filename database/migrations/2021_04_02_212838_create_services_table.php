@@ -17,7 +17,7 @@ class CreateServicesTable extends Migration
             $table->id();
             $table->string('name');
             $table->float('duration', 4, 2);
-            $table->string('category');
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->string('subcategory')->nullable();;
             $table->text('description')->nullable();
             $table->float('price', 8, 2);
