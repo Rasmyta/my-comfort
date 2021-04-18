@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/', function () {
-//     return view('intranet.index');
-// });
+Route::get('intranet', function () {
+    return view('intranet.dashboard');
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
