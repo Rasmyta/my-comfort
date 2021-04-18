@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('intranet', function () {
     return view('intranet.dashboard');
-});
+})->name('intranet');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
