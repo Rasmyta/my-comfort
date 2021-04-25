@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Activity;
 use App\Models\Role;
 use App\Models\Salon;
 use App\Models\Service;
@@ -43,12 +44,25 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1
         ]);
 
+        // 6 activities
+        Activity::create(['name' => 'Peluquería']);
+        Activity::create(['name' => 'Barbería']);
+        Activity::create(['name' => 'Centro de Depilación']);
+        Activity::create(['name' => 'Centro de Estética']);
+        Activity::create(['name' => 'Centro de Manicura']);
+        Activity::create(['name' => 'Masajes']);
+
         User::factory(5)->create(['role_id' => 2]); // clients
         User::factory(5)->create(['role_id' => 3]); // managers
 
         Timetable::factory()->create();
 
-        Salon::factory(10)->create();
+        Salon::factory(2)->create(['activity_id' => 1]);
+        Salon::factory(2)->create(['activity_id' => 2]);
+        Salon::factory(2)->create(['activity_id' => 3]);
+        Salon::factory(2)->create(['activity_id' => 4]);
+        Salon::factory(2)->create(['activity_id' => 5]);
+        Salon::factory(2)->create(['activity_id' => 6]);
 
         Service::factory(10)->create();
     }

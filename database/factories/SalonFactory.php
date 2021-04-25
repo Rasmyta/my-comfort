@@ -25,9 +25,6 @@ class SalonFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'activity' => $this->faker->randomElement([
-                'Peluquería', 'Barbería', 'Centro de Depilación', 'Centro de Estética', 'Centro de Manicura', 'Masajes'
-            ]),
             'employees' => $this->faker->randomDigitNotNull,
             'address' => $this->faker->streetAddress,
             'city' => $this->faker->city,
@@ -37,6 +34,7 @@ class SalonFactory extends Factory
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'timetable_id' => 1,
             'user_id' => 2,
+            'activity_id' => 1,
         ];
     }
 }

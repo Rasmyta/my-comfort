@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Salon extends Model
+class Activity extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,6 @@ class Salon extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'employees', 'address', 'city', 'postal_code', 'description'
+        'name'
     ];
 }
