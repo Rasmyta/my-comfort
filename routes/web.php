@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Intranet\Salons\SalonIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +18,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('intranet', function () {
-    return view('intranet.dashboard');
-})->name('intranet');
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('intranet', function () {
+        return view('intranet.dashboard');
+    })->name('intranet');
+
+    Route::get('intranet/salons', SalonIndex::class)->name('salon-index');
+});
