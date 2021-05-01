@@ -3,37 +3,67 @@
         {{ __('Salones') }}
     </x-slot>
 
+    <div class="flex mb-3 justify-between">
+        <div class="w-2/4">
+            <x-input.search wire:model="search" placeholder="Buscar Salones..." />
+        </div>
+        {{-- <div>
+            <x-button.primary wire:click="create">
+                <x-icon.plus></x-icon.plus> New
+            </x-button.primary>
+        </div> --}}
+    </div>
+
+    <!-- Salons Table -->
     <div class="flex-col space-y-4">
         <x-table>
             <x-slot name="head">
-                <x-table.heading class="w-full">{{ __('Nombre') }}</x-table.heading>
+                <x-table.heading />
+                <x-table.heading sortable wire:click="sortBy('name')"
+                    :direction="$sortField === 'name' ? $sortDirection : null" class="w-full">
+                    {{ __('Nombre') }}</x-table.heading>
                 <x-table.heading>{{ __('Actividad') }}</x-table.heading>
-                <x-table.heading>{{ __('Ciudad') }}</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('employees')"
+                    :direction="$sortField === 'employees' ? $sortDirection : null">{{ __('Empleados') }}
+                </x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('address')"
+                    :direction="$sortField === 'address' ? $sortDirection : null">{{ __('Dirección') }}
+                </x-table.heading>
                 <x-table.heading>{{ __('Gestor(FK)') }}</x-table.heading>
-                <x-table.heading></x-table.heading>
             </x-slot>
             <x-slot name="body">
                 @forelse ($salons as $salon)
-                    <x-table.row>
+                    <x-table.row wire:loading.class.delay="opacity-60">
+                        <x-table.cell>
+                            <div class="flex items-center space-x-1 text-sm">
+                                <x-button.link wire:click="edit({{ $salon->id }})" aria-label="Edit">
+                                    <x-icon.edit></x-icon.edit>
+                                </x-button.link>
+                                <x-button.link aria-label="Delete" wire:click="delete({{ $salon->id }})"
+                                    aria-label="Delete">
+                                    <x-icon.trash></x-icon.trash>
+                                </x-button.link>
+                            </div>
+                        </x-table.cell>
                         <x-table.cell>
                             <p class="font-semibold truncate">{{ $salon->name }}</p>
                         </x-table.cell>
                         <x-table.cell>
-                            <p class="">{{ $salon->activity }}</p>
+                            <p class="">{{ $salon->getActivity->name }}</p>
                         </x-table.cell>
                         <x-table.cell>
-                            <p class="">{{ $salon->city }}</p>
+                            <p class="">{{ $salon->employees }}</p>
                         </x-table.cell>
                         <x-table.cell>
-                            <x-button.link>Gestor</x-button.link>
+                            <p class="">{{ $salon->address . ', ' . $salon->city . ', ' . $salon->postal_code }}</p>
                         </x-table.cell>
                         <x-table.cell>
-                            <x-button.link>Edit</x-button.link>
+                            <x-button.link>{{ $salon->getManager->name }}</x-button.link>
                         </x-table.cell>
                     </x-table.row>
                 @empty
                     <x-table.row>
-                        <x-table.cell colspan="6">
+                        <x-table.cell colspan="5">
                             <div class="flex justify-center items-center space-x-2">
                                 <x-icon.inbox class="h-8 w-8 text-cool-gray-400" />
                                 <span
@@ -45,10 +75,69 @@
                 @endforelse
             </x-slot>
         </x-table>
-
-        <div>
+        <!-- Pagination -->
+        <div class="pb-5">
             {{ $salons->links() }}
         </div>
     </div>
+
+    <!-- Update / Create Modal -->
+    <form wire:submit.prevent="save">
+        <x-modal.dialog wire:model.defer="showEditModal">
+            <x-slot name="title">{{ $titleModal }}</x-slot>
+            <x-slot name="content">
+                <x-input.group for="name" label="Nombre" :error="$errors->first('editing.name')">
+                    <x-input.text wire:model="editing.name" id="name" />
+                </x-input.group>
+                <x-input.group for="activity" label="Actividad" :error="$errors->first('editing.activity')">
+                    <x-input.select wire:model="editing.activity_id" id="activity_id">
+                        @forelse ($activities as $activity)
+                            <option value="{{ $activity->id }}">{{ $activity->name }}</option>
+                        @empty
+                            <option value="">No matching results were found.</option>
+                        @endforelse
+                    </x-input.select>
+                </x-input.group>
+                <x-input.group for="employees" label="Empleados" :error="$errors->first('editing.employees')">
+                    <x-input.text wire:model="editing.employees" id="employees" />
+                </x-input.group>
+                <x-input.group for="address" label="Dirección" :error="$errors->first('editing.address')">
+                    <x-input.text wire:model="editing.address" id="address" />
+                </x-input.group>
+                <x-input.group for="city" label="Ciudad" :error="$errors->first('editing.city')">
+                    <x-input.text wire:model="editing.city" id="city" />
+                </x-input.group>
+                <x-input.group for="postal_code" label="Código postal" :error="$errors->first('editing.postal_code')">
+                    <x-input.text wire:model="editing.postal_code" id="postal_code" />
+                </x-input.group>
+                <x-input.group for="description" label="Descripción" :error="$errors->first('editing.description')">
+                    <x-input.textarea wire:model="editing.description" id="description" />
+                </x-input.group>
+            </x-slot>
+            <x-slot name="footer">
+                <x-button.secondary wire:click="$set('showEditModal', false)">{{ __('Cancelar') }}
+                </x-button.secondary>
+                <x-button.primary type="submit">{{ __('Guardar') }}</x-button.primary>
+            </x-slot>
+        </x-modal.dialog>
+    </form>
+
+    <!-- Delete Confirmation Modal -->
+    <form wire:submit.prevent="deleteConfirm">
+        <x-modal.confirmation wire:model.defer="showDeleteModal">
+            <x-slot name="title">{{ __('Eliminar Salon') }}</x-slot>
+
+            <x-slot name="content">
+                <div class="py-8 text-cool-gray-700">{{ __('¿Está seguro? Esta acción es irreversible.') }}</div>
+            </x-slot>
+
+            <x-slot name="footer">
+                <x-button.secondary wire:click="$set('showDeleteModal', false)">{{ __('Cancelar') }}
+                </x-button.secondary>
+
+                <x-button.primary type="submit">{{ __('Eliminar') }}</x-button.primary>
+            </x-slot>
+        </x-modal.confirmation>
+    </form>
 
 </div>
