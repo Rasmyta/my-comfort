@@ -8,7 +8,7 @@
              </svg>
          </div>
          <input
-             {{ $attributes->merge(['class' => 'w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-500 border-cool-gray-300 transition duration-150 ease-in-out rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-400 focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input']) }}
+             {{ $attributes->merge(['class' => 'w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-500 border-cool-gray-300 transition duration-150 ease-in-out rounded-md dark:placeholder-gray-500 dark:border-gray-700 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-800 dark:text-gray-200 focus:placeholder-gray-400 focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input']) }}
              type="text" aria-label="Search" />
 
      </div>
