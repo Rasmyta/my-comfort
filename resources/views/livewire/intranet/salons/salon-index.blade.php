@@ -15,7 +15,7 @@
     </div>
 
     <!-- Salons Table -->
-    <div class="flex-col space-y-4">
+    <div class="grid grid-cols-1 max-w-full lg:max-w-7xl space-y-4">
         <x-table>
             <x-slot name="head">
                 <x-table.heading />
@@ -76,9 +76,9 @@
             </x-slot>
         </x-table>
         <!-- Pagination -->
-        <div class="pb-5">
-            {{ $salons->links() }}
-        </div>
+        <x-table.pagination>
+            <x-slot name="links">{{ $salons->links() }}</x-slot>
+        </x-table.pagination>
     </div>
 
     <!-- Update / Create Modal -->
