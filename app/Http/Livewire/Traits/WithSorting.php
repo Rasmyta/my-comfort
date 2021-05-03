@@ -16,4 +16,9 @@ trait WithSorting
         }
         $this->sortField = $field;
     }
+
+    public function applySorting($query)
+    {
+        return $query->orderBy($this->sortField, $this->sortDirection);
+    }
 }

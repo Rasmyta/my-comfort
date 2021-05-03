@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Intranet\Salons;
 
 use App\Http\Livewire\Traits\WithSorting;
+use App\Http\Livewire\Traits\WithBulkActions;
 use App\Models\Activity;
 use App\Models\Salon;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,17 +12,25 @@ use Livewire\WithPagination;
 
 class SalonIndex extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination, WithSorting, WithBulkActions;
 
     public $search = "";
     public $deleteId = "";
     public $titleModal = "";
+    public $perPage = 10;
+    public $showFilters = false;
     public $showEditModal = false;
     public $showDeleteModal = false;
     public Collection $activities;
     public Salon $editing;
 
     protected $queryString = ['sortField', 'sortDirection'];
+
+    public $filters = [
+        'search' => '',
+        'activity_id' => '',
+        'city' => ''
+    ];
 
     public function rules()
     {
@@ -44,14 +53,25 @@ class SalonIndex extends Component
 
     public function render()
     {
-        $salons = Salon::search('name', $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(6);
-        return view('livewire.intranet.salons.salon-index', ['salons' => $salons])->layout('layouts.intranet');
+        return view('livewire.intranet.salons.salon-index', ['salons' => $this->rows])->layout('layouts.intranet');
     }
 
-    public function makeBlankSalon()
+    public function getRowsQueryProperty()
     {
-        return Salon::make();
+        $query = Salon::query()
+            ->when($this->filters['activity_id'], fn ($query, $activity) => $query->where('activity_id', $activity))
+            ->when($this->filters['city'], fn ($query, $city) => $query->where('city', 'like', '%' . $city . '%'))
+            ->when($this->filters['search'], fn ($query, $search) => $query->where('name', 'like', '%' . $search . '%'))
+            ->orderBy($this->sortField, $this->sortDirection);
+
+        return $this->applySorting($query);
     }
+
+    public function getRowsProperty()
+    {
+        return $this->rowsQuery->paginate($this->perPage);
+    }
+
 
     public function create()
     {
@@ -89,5 +109,34 @@ class SalonIndex extends Component
         Salon::findOrFail($this->deleteId)->delete();
         $this->deleteId = "";
         $this->showDeleteModal = false;
+    }
+
+    public function toggleShowFilters()
+    {
+        $this->showFilters = !$this->showFilters;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset('filters');
+    }
+
+    // Resets the page when the 'filters' are updated
+    public function updatedFilters()
+    {
+        $this->resetPage();
+    }
+
+    public function exportSelected()
+    {
+        return response()->streamDownload(function () {
+            echo $this->selectedRowsQuery->toCsv();
+        }, 'salones.csv');
+    }
+
+
+    private function makeBlankSalon()
+    {
+        return Salon::make();
     }
 }
