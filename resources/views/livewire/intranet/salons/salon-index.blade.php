@@ -20,7 +20,7 @@
                 </x-input.select>
             </x-input.group>
             <div>
-                @if ($selectPage)
+                @if ($selected)
                     <div>
                         <x-button.primary wire:click="exportSelected">
                             <x-icon.download /> <span>{{ __('Exportar') }}</span>
@@ -72,7 +72,7 @@
     </div>
 
     <!-- Salons Table -->
-    <div class="grid grid-cols-1 max-w-full lg:max-w-7xl space-y-4">
+    <div class="grid grid-cols-1 lg:max-w-7xl space-y-4">
         <x-table>
             <x-slot name="head">
                 <x-table.heading class="pr-0 w-8">

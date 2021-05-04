@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Intranet\Dashboard\AdminDashboard;
 use App\Http\Livewire\Intranet\Salons\SalonIndex;
+use App\Http\Livewire\Intranet\Users\UserIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,4 +30,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('intranet', AdminDashboard::class)->name('intranet');
 
     Route::get('intranet/salons', SalonIndex::class)->name('salon-index');
+    Route::get('intranet/users', UserIndex::class)->name('user-index');
 });
