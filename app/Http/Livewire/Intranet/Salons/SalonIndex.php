@@ -23,14 +23,12 @@ class SalonIndex extends Component
     public $showDeleteModal = false;
     public Collection $activities;
     public Salon $editing;
-
-    protected $queryString = ['sortField', 'sortDirection'];
-
     public $filters = [
         'search' => '',
         'activity_id' => '',
         'city' => ''
     ];
+    protected $queryString = ['sortField', 'sortDirection'];
 
     public function rules()
     {
@@ -40,7 +38,7 @@ class SalonIndex extends Component
             'editing.address' => 'required',
             'editing.city' => 'required',
             'editing.postal_code' => 'required|numeric',
-            'editing.description' => 'nullable|required',
+            'editing.description' => 'nullable',
             'editing.activity_id' => 'required|numeric'
         ];
     }
@@ -116,16 +114,10 @@ class SalonIndex extends Component
         $this->showFilters = !$this->showFilters;
     }
 
-    public function resetFilters()
-    {
-        $this->reset('filters');
-    }
+    public function resetFilters() { $this->reset('filters'); }
 
     // Resets the page when the 'filters' are updated
-    public function updatedFilters()
-    {
-        $this->resetPage();
-    }
+    public function updatedFilters() { $this->resetPage(); }
 
     public function exportSelected()
     {
@@ -134,9 +126,5 @@ class SalonIndex extends Component
         }, 'salones.csv');
     }
 
-
-    private function makeBlankSalon()
-    {
-        return Salon::make();
-    }
+    private function makeBlankSalon() {return Salon::make(); }
 }
