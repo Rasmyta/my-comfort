@@ -1,48 +1,11 @@
 <div>
     <x-slot name="title">
-        {{ __('Salones') }}
+        {{ __($title) }}
     </x-slot>
 
-    <div class="flex mb-3 justify-between">
-        <div class="w-2/4 flex space-x-4">
-            <x-input.search wire:model="filters.search" placeholder="Buscar Salones..." />
-            <x-button.link wire:click="toggleShowFilters">
-                @if ($showFilters) Ocultar @endif Búsqueda
-                Avanzada...
-            </x-button.link>
-        </div>
-        <div class="space-x-2 flex items-center">
-            <x-input.group borderless paddingless for="perPage" label="Por Página">
-                <x-input.select wire:model="perPage" id="perPage">
-                    <option value="10" selected>10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                </x-input.select>
-            </x-input.group>
-            <div>
-                @if ($selected)
-                    <div>
-                        <x-button.primary wire:click="exportSelected">
-                            <x-icon.download /> <span>{{ __('Exportar') }}</span>
-                        </x-button.primary>
-                    </div>
-                @else
-                    <div id="tooltipExport">
-                        <x-button.primary disabled>
-                            <x-icon.download /> <span>{{ __('Exportar') }}</span>
-                        </x-button.primary>
-                    </div>
-                @endif
-            </div>
-            {{-- <div>
-                <x-button.primary wire:click="create">
-                    <x-icon.plus></x-icon.plus> New
-                </x-button.primary>
-             </div> --}}
-        </div>
-    </div>
+    @include("intranet.actions")
 
-    <!-- Advanced Search -->
+     <!-- Advanced Search -->
     <div>
         @if ($showFilters)
             <div class="bg-cool-gray-200 p-4 rounded shadow-inner flex relative">
@@ -62,11 +25,8 @@
                         <x-input.text wire:model.lazy="filters.city" id="filter-city" />
                     </x-input.group>
                 </div>
-                <div class="w-1/2 pl-2 space-y-4">
-                    <x-button.link wire:click="resetFilters" class="absolute right-0 bottom-0 p-4">
-                        {{ __('Restablecer filtros') }}
-                    </x-button.link>
-                </div>
+
+                <x-button.reset-filters></x-button.reset-filters>
             </div>
         @endif
     </div>
