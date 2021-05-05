@@ -17,11 +17,12 @@ class UserIndex extends Component
     public $search = "";
     public $deleteId = "";
     public $titleModal = "";
+    public $title = "Usuarios";
     public $perPage = 10;
     public $showFilters = false;
     public $showEditModal = false;
     public $showDeleteModal = false;
-    public Collection $activities;
+    public Collection $roles;
     public User $editing;
     public $filters = [
         'search' => '',
@@ -40,7 +41,6 @@ class UserIndex extends Component
             'editing.email' => 'required', //validate email !!!
             'editing.phone' => 'required',
             'editing.postal_code' => 'required|numeric|max:5',
-            'editing.gender' => 'nullable|required',
             'editing.role_id' => 'required|numeric'
         ];
     }

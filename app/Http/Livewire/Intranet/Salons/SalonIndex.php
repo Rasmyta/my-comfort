@@ -17,6 +17,7 @@ class SalonIndex extends Component
     public $search = "";
     public $deleteId = "";
     public $titleModal = "";
+    public $title = "Salones";
     public $perPage = 10;
     public $showFilters = false;
     public $showEditModal = false;
