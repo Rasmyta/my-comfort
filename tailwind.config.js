@@ -230,10 +230,12 @@ module.exports = {
         borderColor: ["focus", "hover", "dark", "dark:focus", "dark:hover"],
         divideColor: ["dark"],
         boxShadow: ["focus", "dark:focus"],
+        scrollbar: ["rounded", "dark"],
     },
     plugins: [
         require("tailwindcss-multi-theme"),
         require("@tailwindcss/custom-forms"),
+        require("tailwind-scrollbar"),
         plugin(({ addUtilities, e, theme, variants }) => {
             const newUtilities = {};
             Object.entries(theme("colors")).map(([name, value]) => {
