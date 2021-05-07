@@ -15,6 +15,16 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'duration', 'category', 'subcategory', 'description', 'price'
+        'name', 'duration', 'subcategory', 'description', 'price'
     ];
+
+    public function getCategory()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function getSalon()
+    {
+        return $this->belongsTo(Salon::class, 'salon_id');
+    }
 }
