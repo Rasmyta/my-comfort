@@ -38,8 +38,8 @@ class UserIndex extends Component
         return [
             'editing.name' => 'required',
             'editing.surname' => 'required',
-            'editing.email' => 'required', //validate email !!!
-            'editing.phone' => 'required',
+            'editing.email' => 'required|email:rfc,filter',
+            'editing.phone' => 'required|max:20',
             'editing.postal_code' => 'required|numeric|max:5',
             'editing.role_id' => 'required|numeric'
         ];

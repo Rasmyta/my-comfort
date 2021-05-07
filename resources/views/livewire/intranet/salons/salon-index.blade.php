@@ -49,7 +49,8 @@
                 <x-table.heading sortable wire:click="sortBy('address')"
                     :direction="$sortField === 'address' ? $sortDirection : null">{{ __('Dirección') }}
                 </x-table.heading>
-                <x-table.heading>{{ __('Gestor(FK)') }}</x-table.heading>
+                <x-table.heading>{{ __('Gestor') }}</x-table.heading>
+                <x-table.heading>{{ __('Registrado') }}</x-table.heading>
             </x-slot>
 
             <x-slot name="body">
@@ -77,39 +78,23 @@
                         </x-table.cell>
                         <x-table.cell>
                             <div class="flex items-center space-x-1 text-sm">
-                                <x-button.link wire:click="edit({{ $salon->id }})" aria-label="Edit">
-                                    <x-icon.edit></x-icon.edit>
-                                </x-button.link>
-                                <x-button.link aria-label="Delete" wire:click="delete({{ $salon->id }})"
-                                    aria-label="Delete">
-                                    <x-icon.trash></x-icon.trash>
-                                </x-button.link>
+                                <x-button.link wire:click="edit({{ $salon->id }})" aria-label="Edit"><x-icon.edit></x-icon.edit></x-button.link>
+                                <x-button.link wire:click="delete({{ $salon->id }})" aria-label="Delete"><x-icon.trash></x-icon.trash></x-button.link>
                             </div>
                         </x-table.cell>
-                        <x-table.cell>
-                            <p class="font-semibold truncate">{{ $salon->name }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <p class="">{{ $salon->getActivity->name }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <p class="">{{ $salon->employees }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <p class="">{{ $salon->address . ', ' . $salon->city . ', ' . $salon->postal_code }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <x-button.link>{{ $salon->getManager->name }}</x-button.link>
-                        </x-table.cell>
+                        <x-table.cell><p class="font-semibold truncate">{{ $salon->name }}</p></x-table.cell>
+                        <x-table.cell><p>{{ $salon->getActivity->name }}</p></x-table.cell>
+                        <x-table.cell><p>{{ $salon->employees }}</p></x-table.cell>
+                        <x-table.cell><p>{{ $salon->address . ', ' . $salon->city . ', ' . $salon->postal_code }}</p></x-table.cell>
+                        <x-table.cell><x-button.link>{{ $salon->getManager->name }}</x-button.link></x-table.cell>
+                        <x-table.cell><p>{{ $salon->created_at }}</p></x-table.cell>
                     </x-table.row>
                 @empty
                     <x-table.row>
-                        <x-table.cell colspan="5">
+                        <x-table.cell colspan="8">
                             <div class="flex justify-center items-center space-x-2">
                                 <x-icon.inbox class="h-8 w-8 text-cool-gray-400" />
-                                <span
-                                    class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No se encontraron salones
-                                    ...') }}</span>
+                                <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No se encontraron salones ...') }}</span>
                             </div>
                         </x-table.cell>
                     </x-table.row>

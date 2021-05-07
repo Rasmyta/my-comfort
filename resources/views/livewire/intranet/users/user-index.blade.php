@@ -45,19 +45,16 @@
                     <x-input.checkbox wire:model="selectPage" />
                 </x-table.heading>
                 <x-table.heading />
-                <x-table.heading sortable wire:click="sortBy('name')"
-                    :direction="$sortField === 'name' ? $sortDirection : null" class="w-full">
+                <x-table.heading sortable wire:click="sortBy('name')" :direction="$sortField === 'name' ? $sortDirection : null" class="w-full">
                     {{ __('Nombre') }}</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('surname')"
-                    :direction="$sortField === 'surname' ? $sortDirection : null">
+                <x-table.heading sortable wire:click="sortBy('surname')" :direction="$sortField === 'surname' ? $sortDirection : null">
                     {{ __('Apellidos') }}</x-table.heading>
                 <x-table.heading>{{ __('Email') }}</x-table.heading>
                 <x-table.heading>{{ __('Teléfono') }}</x-table.heading>
                 <x-table.heading>{{ __('Código postal') }}</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('role_id')"
-                    :direction="$sortField === 'role_id' ? $sortDirection : null">
+                <x-table.heading sortable wire:click="sortBy('role_id')" :direction="$sortField === 'role_id' ? $sortDirection : null">
                     {{ __('Rol') }}</x-table.heading>
-
+                <x-table.heading>{{ __('Registrado') }}</x-table.heading>
             </x-slot>
 
             <x-slot name="body">
@@ -85,48 +82,40 @@
                         </x-table.cell>
                         <x-table.cell>
                             <div class="flex items-center space-x-1 text-sm">
-                                <x-button.link wire:click="edit({{ $user->id }})" aria-label="Edit">
-                                    <x-icon.edit></x-icon.edit>
-                                </x-button.link>
-                                <x-button.link aria-label="Delete" wire:click="delete({{ $user->id }})"
-                                    aria-label="Delete">
-                                    <x-icon.trash></x-icon.trash>
-                                </x-button.link>
+                                <x-button.link wire:click="edit({{ $user->id }})" aria-label="Edit"> <x-icon.edit></x-icon.edit></x-button.link>
+                                <x-button.link wire:click="delete({{ $user->id }})" aria-label="Delete"><x-icon.trash></x-icon.trash></x-button.link>
                             </div>
                         </x-table.cell>
-                        <x-table.cell>
-                            <p class="font-semibold truncate">{{ $user->name }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <p>{{ $user->surname }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <p>{{ $user->email }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <p>{{ $user->phone }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <p>{{ $user->postal_code }}</p>
-                        </x-table.cell>
-                        <x-table.cell>
-                            <p>{{ $user->role_id . ' add name' }}</p>
-                        </x-table.cell>
+                        <x-table.cell><p class="font-semibold truncate">{{ $user->name }}</p></x-table.cell>
+                        <x-table.cell><p>{{ $user->surname }}</p></x-table.cell>
+                        <x-table.cell><p>{{ $user->email }}</p></x-table.cell>
+                        <x-table.cell><p>{{ $user->phone }}</p></x-table.cell>
+                        <x-table.cell><p>{{ $user->postal_code }}</p></x-table.cell>
+                        <x-table.cell><p>{{ ucfirst($user->getRole->name) }}</p></x-table.cell>
+                        <x-table.cell><p>{{ $user->created_at }}</p></x-table.cell>
                     </x-table.row>
                 @empty
                     <x-table.row>
-                        <x-table.cell colspan="5">
+                        <x-table.cell colspan="9">
                             <div class="flex justify-center items-center space-x-2">
                                 <x-icon.inbox class="h-8 w-8 text-cool-gray-400" />
-                                <span
-                                    class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No se encontraron usuarios
-                                    ...') }}</span>
+                                <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No se encontraron usuarios ...') }}</span>
                             </div>
                         </x-table.cell>
                     </x-table.row>
                 @endforelse
             </x-slot>
         </x-table>
+
+
+
+        {{-- @forelse ($user->getReviews as $review)
+            {{ count($user->getReviews) }}
+            <p>{{ $review->comment }}</p>
+        @empty
+            <p>No reviews.</p>
+        @endforelse --}}
+
         <!-- Pagination -->
         <x-table.pagination>
             <x-slot name="links">{{ $users->links() }}</x-slot>
@@ -149,7 +138,7 @@
                         <x-input.group for="email" label="Email" :error="$errors->first('editing.email')">
                             <x-input.text wire:model="editing.email" id="email" />
                         </x-input.group>
-                        <x-input.group for="phone" label="Telñefono" :error="$errors->first('editing.phone')">
+                        <x-input.group for="phone" label="Teléfono" :error="$errors->first('editing.phone')">
                             <x-input.text wire:model="editing.phone" id="phone" />
                         </x-input.group>
                         <x-input.group for="postal_code" label="Código postal"

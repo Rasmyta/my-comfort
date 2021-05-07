@@ -59,8 +59,18 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function getSalon()
+    public function getRole()
     {
-        return $this->hasOne(Salon::class);
+        return $this->belongsTo(Role::class, "role_id");
+    }
+
+    public function getReviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getReservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

@@ -18,6 +18,11 @@ class Salon extends Model
         'name', 'employees', 'address', 'city', 'postal_code', 'description'
     ];
 
+    public function getService()
+    {
+        return $this->hasMany(Service::class);
+    }
+
     public function getManager()
     {
         return $this->belongsTo(User::class, 'user_id');

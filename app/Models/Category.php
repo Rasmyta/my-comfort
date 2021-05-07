@@ -17,4 +17,9 @@ class Category extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function getService()
+    {
+        return $this->hasMany(Service::class);
+    }
 }
