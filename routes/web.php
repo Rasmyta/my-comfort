@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\MainController;
+use App\Http\Livewire\Client\CartIndex;
 use App\Http\Livewire\Intranet\Dashboard\AdminDashboard;
+use App\Http\Livewire\Intranet\Reservations\ReservationIndex;
 use App\Http\Livewire\Intranet\Salons\SalonIndex;
+use App\Http\Livewire\Intranet\Salons\SalonShow;
 use App\Http\Livewire\Intranet\Services\ServiceIndex;
 use App\Http\Livewire\Intranet\Users\UserIndex;
 use Illuminate\Support\Facades\Route;
@@ -21,16 +25,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainController::class, 'index'])->name('dashboard');
+
+/**
+ * INTRANET
+ */
+Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'intranet'], function () {
+
+    Route::get('/', AdminDashboard::class)->name('intranet');
+
+    Route::group(['as' => 'intranet.'], function () {
+        Route::get('salons', SalonIndex::class)->name('salons.index');
+        Route::get('salon/{salon}', SalonShow::class)->name('salon.show');
+
+        Route::get('users', UserIndex::class)->name('users.index');
+        Route::get('services', ServiceIndex::class)->name('services.index');
+        Route::get('reservations', ReservationIndex::class)->name('reservations.index');
+    });
+});
 
 
-
+/**
+ * CLIENT
+ */
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('intranet', AdminDashboard::class)->name('intranet');
 
-    Route::get('intranet/salons', SalonIndex::class)->name('salon-index');
-    Route::get('intranet/users', UserIndex::class)->name('user-index');
-    Route::get('intranet/services', ServiceIndex::class)->name('service-index');
+    Route::get('cart/add/{id}', [CartIndex::class, 'add'])->name('add.reservation');
+
+    Route::get('salon/{id}', [MainController::class, 'showSalon'])->name('salon.show');
 });
