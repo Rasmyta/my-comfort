@@ -18,7 +18,7 @@ class Salon extends Model
         'name', 'employees', 'address', 'city', 'postal_code', 'description'
     ];
 
-    public function getService()
+    public function getServices()
     {
         return $this->hasMany(Service::class);
     }

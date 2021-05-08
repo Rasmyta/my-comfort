@@ -17,4 +17,9 @@ class Reservation extends Model
     protected $fillable = [
         'date', 'time'
     ];
+
+    public function getServices()
+    {
+        return $this->belongsToMany(Service::class, 'reservation_service', 'reservation_id', 'service_id');
+    }
 }
