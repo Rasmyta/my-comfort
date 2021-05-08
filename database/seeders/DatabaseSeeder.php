@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Activity;
+use App\Models\Category;
 use App\Models\Role;
 use App\Models\Salon;
 use App\Models\Service;
@@ -64,6 +65,15 @@ class DatabaseSeeder extends Seeder
         Salon::factory(2)->create(['activity_id' => 5]);
         Salon::factory(2)->create(['activity_id' => 6]);
 
+        Category::create(['name' => 'Peluquería']);
+        Category::create(['name' => 'Faciales']);
+        Category::create(['name' => 'Uñas']);
+        Category::create(['name' => 'Depilación']);
+        Category::create(['name' => 'Corporales']);
+        Category::create(['name' => 'Masaje']);
+
         Service::factory(10)->create();
+
+
     }
 }
