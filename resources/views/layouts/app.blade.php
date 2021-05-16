@@ -14,6 +14,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+    <!-- Icons -->
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
     <!-- Alpine -->
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="{{ asset('js/intranet/init-alpine.js') }}"></script>
@@ -40,9 +43,13 @@
         @endif
 
         <!-- Page Content -->
-        <main>
+        <main id="app-container">
             {{ $slot }}
         </main>
+
+        <!-- Site footer -->
+        @include('client.footer')
+
     </div>
 
     <!-- Tippy Tooltips (Development) -->
