@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,5 +37,15 @@ class Salon extends Model
     public function getActivity()
     {
         return $this->belongsTo(Activity::class, 'activity_id');
+    }
+
+    public static function salonsByCategory($categoryId)
+    {
+        return DB::table('salons')
+            ->join('services', 'salons.id', '=', 'services.salon_id')
+            ->select('salons.*')
+            ->groupBy('salons.id', 'category_id')
+            ->having('category_id', $categoryId)
+            ->get();
     }
 }
