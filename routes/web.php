@@ -23,9 +23,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainController::class, 'index'])->name('dashboard');
+
+
+/**
+ * CLIENT
+ */
+Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
+Route::get('cart/add/{id}', [CartIndex::class, 'add'])->name('add.reservation');
+Route::get('salon/{id}', [MainController::class, 'showSalon'])->name('salon.show');
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+});
 
 /**
  * INTRANET
@@ -42,15 +52,4 @@ Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'intrane
         Route::get('services', ServiceIndex::class)->name('services.index');
         Route::get('reservations', ReservationIndex::class)->name('reservations.index');
     });
-});
-
-
-/**
- * CLIENT
- */
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-
-    Route::get('cart/add/{id}', [CartIndex::class, 'add'])->name('add.reservation');
-
-    Route::get('salon/{id}', [MainController::class, 'showSalon'])->name('salon.show');
 });
