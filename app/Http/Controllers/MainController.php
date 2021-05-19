@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Salon;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,10 @@ class MainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($category)
     {
-        return view('dashboard', ['salons' => Salon::all()]);
+        $categoryId = Category::where('name', '=', $category)->get()->first()->id;
+        return view('dashboard', ['salons' => Salon::salonsByCategory($categoryId)]);
     }
 
     /**
