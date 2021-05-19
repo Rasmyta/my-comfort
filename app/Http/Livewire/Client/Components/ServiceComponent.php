@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components;
+namespace App\Http\Livewire\Client\Components;
 
 use App\Models\Service;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -20,7 +20,7 @@ class ServiceComponent extends Component
     public function render()
     {
         $this->isSelected = $this->hasCartItem($this->service->id);
-        return view('livewire.components.service-component');
+        return view('livewire.client.components.service-component');
     }
 
     public function reservate()

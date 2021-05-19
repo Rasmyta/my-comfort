@@ -69,7 +69,7 @@
                         <x-slot name="body">
                             @forelse ($salon->getServices as $service)
                                 {{-- Service Components --}}
-                                @livewire('components.service-component', ['service' => $service], key($service->id))
+                                @livewire('client.components.service-component', ['service' => $service], key($service->id))
                             @empty
                                 <x-table.row>
                                     <x-table.cell colspan="9">
