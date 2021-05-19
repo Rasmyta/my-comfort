@@ -13,10 +13,9 @@ class MainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($category)
+    public function index()
     {
-        $categoryId = Category::where('name', '=', $category)->get()->first()->id;
-        return view('dashboard', ['salons' => Salon::salonsByCategory($categoryId)]);
+       //
     }
 
     /**

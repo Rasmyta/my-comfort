@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MainController;
 use App\Http\Livewire\Client\CartIndex;
+use App\Http\Livewire\Client\SalonsIndex;
 use App\Http\Livewire\Intranet\Dashboard\AdminDashboard;
 use App\Http\Livewire\Intranet\Reservations\ReservationIndex;
 use App\Http\Livewire\Intranet\Salons\SalonIndex;
@@ -30,12 +31,10 @@ Route::get('/', function () {
 /**
  * CLIENT
  */
-Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
-Route::get('cart/add/{id}', [CartIndex::class, 'add'])->name('add.reservation');
+Route::get( '/salons/{category}', SalonsIndex::class)->name('salons');
 Route::get('salon/{id}', [MainController::class, 'showSalon'])->name('salon.show');
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-});
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {});
 
 /**
  * INTRANET
@@ -44,7 +43,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'intrane
 
     Route::get('/', AdminDashboard::class)->name('intranet');
 
-    Route::group(['as' => 'intranet.'], function () {
+    Route::group(['as' => 'intranet.'], function () { // 'as' prefix for route names
         Route::get('salons', SalonIndex::class)->name('salons.index');
         Route::get('salon/{salon}', SalonShow::class)->name('salon.show');
 
