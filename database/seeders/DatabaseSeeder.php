@@ -65,15 +65,13 @@ class DatabaseSeeder extends Seeder
         Salon::factory(2)->create(['activity_id' => 5]);
         Salon::factory(2)->create(['activity_id' => 6]);
 
-        Category::create(['name' => 'Peluquería']);
-        Category::create(['name' => 'Faciales']);
-        Category::create(['name' => 'Uñas']);
-        Category::create(['name' => 'Depilación']);
-        Category::create(['name' => 'Corporales']);
-        Category::create(['name' => 'Masaje']);
+        Category::create(['name' => 'Peluquería', 'route_name' => 'peluqueria']);
+        Category::create(['name' => 'Uñas', 'route_name' => 'unas']);
+        Category::create(['name' => 'Faciales', 'route_name' => 'faciales']);
+        Category::create(['name' => 'Depilación', 'route_name' => 'depilacion']);
+        Category::create(['name' => 'Corporales', 'route_name' => 'corporales']);
+        Category::create(['name' => 'Masaje', 'route_name' => 'masaje']);
 
-        Service::factory(10)->create();
-
-
+        Service::factory(20)->create();
     }
 }
