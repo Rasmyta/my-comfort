@@ -18,7 +18,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white mb-6 overflow-hidden shadow-xl sm:rounded-lg">
                 {{-- {{ dd( Cart::content())}} --}}
                 @forelse (Cart::content() as $item)
                     <p>{{ 'ID: ' . $item->id . ', ' . $item->name }}</p>
@@ -69,7 +69,8 @@
                         <x-slot name="body">
                             @forelse ($salon->getServices as $service)
                                 {{-- Service Components --}}
-                                @livewire('client.components.service-component', ['service' => $service], key($service->id))
+                                @livewire('client.components.service-component', ['service' => $service],
+                                key($service->id))
                             @empty
                                 <x-table.row>
                                     <x-table.cell colspan="9">
@@ -86,6 +87,10 @@
                 </div>
 
             </div>
+
+            <a href="{{ url()->previous() }}">
+                <x-button.primary><i class="fas fa-chevron-left"></i> Ir Atrás</x-button.primary>
+            </a>
         </div>
     </div>
 </x-app-layout>
