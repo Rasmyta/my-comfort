@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="flex flex-row gap-2 items-center mt-2 ">
-                    <img src="{{ url('storage/location-icon.svg') }}" alt="icon" style="width: 4%; height: auto;">
+                    <x-icon.location />
                     <p class="text-gray-500 text-sm">{{ $salon->address . ', ' . $salon->city }}</p>
                 </div>
 
