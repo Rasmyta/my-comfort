@@ -14,7 +14,7 @@ class CreateSalonImagesTable extends Migration
     public function up()
     {
         Schema::create('salon_images', function (Blueprint $table) {
-            $table->id('path');
+            $table->string('path', 255)->primary();
             $table->foreignId('salon_id')->constrained('salons')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
