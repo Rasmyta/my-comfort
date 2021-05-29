@@ -22,33 +22,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
-
-
 /**
- * CLIENT
+ * GUEST
  */
-Route::get( '/salons/{category}', SalonsIndex::class)->name('salons');
+Route::view('/', 'welcome')->name('welcome');
+Route::get('/salons/{category}', SalonsIndex::class)->name('salons');
 Route::get('salon/{id}', [MainController::class, 'showSalon'])->name('salon.show');
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {});
+/**
+ * LOGGED IN (CLIENT)
+ */
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+});
 
 /**
  * INTRANET
  */
 Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'intranet'], function () {
-
+    // Dashboards
     Route::get('/', AdminDashboard::class)->name('intranet');
-
-    Route::group(['as' => 'intranet.'], function () { // 'as' prefix for route names
-        Route::get('salons', SalonIndex::class)->name('salons.index');
-        Route::get('salon/{salon}', SalonShow::class)->name('salon.show');
-
-        Route::get('users', UserIndex::class)->name('users.index');
-        Route::get('services', ServiceIndex::class)->name('services.index');
-        Route::get('reservations', ReservationIndex::class)->name('reservations.index');
-    });
+    // Salons
+    Route::get('salons', SalonIndex::class)->name('intranet.salons.index');
+    Route::get('salon/{salon}', SalonShow::class)->name('intranet.salon.show');
+    // Users
+    Route::get('users', UserIndex::class)->name('intranet.users.index');
+    // Services
+    Route::get('services', ServiceIndex::class)->name('intranet.services.index');
+    // Reservations
+    Route::get('reservations', ReservationIndex::class)->name('intranet.reservations.index');
 });

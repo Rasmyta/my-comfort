@@ -8,11 +8,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css">
 
     @livewireStyles
 
@@ -53,7 +54,11 @@
 
     </div>
 
-    <!-- Tippy Tooltips (Development) -->
+    @stack('modals')
+
+    @livewireScripts
+
+     <!-- Tippy Tooltips (Development) -->
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
     <!-- Tippy Tooltips (Production)
@@ -72,9 +77,8 @@
 
     </script>
 
-    @stack('modals')
-
-    @livewireScripts
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 
 </body>
 

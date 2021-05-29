@@ -24,6 +24,11 @@ class Salon extends Model
         return $this->hasMany(Service::class);
     }
 
+    public function getImages()
+    {
+        return $this->hasMany(SalonImage::class);
+    }
+
     public function getManager()
     {
         return $this->belongsTo(User::class, 'user_id');

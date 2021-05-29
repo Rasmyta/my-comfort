@@ -80,6 +80,7 @@
                             <div class="flex items-center space-x-1 text-sm">
                                 <x-button.link wire:click="edit({{ $salon->id }})" aria-label="Edit"><x-icon.edit></x-icon.edit></x-button.link>
                                 <x-button.link wire:click="delete({{ $salon->id }})" aria-label="Delete"><x-icon.trash></x-icon.trash></x-button.link>
+                                <a href="{{ route('intranet.salon.show', [$salon->id]) }}"><x-button.link  aria-label="View"><x-icon.view></x-icon.view></x-button.link></a>
                             </div>
                         </x-table.cell>
                         <x-table.cell><p class="font-semibold truncate">{{ $salon->name }}</p></x-table.cell>

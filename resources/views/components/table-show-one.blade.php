@@ -1,6 +1,6 @@
 @props(['head' => '', 'body' => ''])
 
-<div class="align-middle w-2/3 overflow-y-auto overflow-x-auto shadow overflow-hidden sm:rounded-lg scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 dark:scrollbar-track-gray-700 dark:scrollbar-thumb-gray-600">
+<div {{ $attributes->merge(['class' => 'align-middle overflow-y-auto overflow-x-auto shadow overflow-hidden sm:rounded-lg scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 dark:scrollbar-track-gray-700 dark:scrollbar-thumb-gray-600']) }}>
     <table class="text-left min-w-full divide-y divide-cool-gray-200">
         @if ($head)
             <thead>
