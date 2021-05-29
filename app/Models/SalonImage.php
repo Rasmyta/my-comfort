@@ -9,6 +9,15 @@ class SalonImage extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'path', 'salon_id'
+    ];
+
     protected $table = 'salon_images';
 
     protected $primaryKey = 'path';
@@ -16,4 +25,9 @@ class SalonImage extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
+
+    public function getSalon()
+    {
+        return $this->belongsTo(Salon::class, 'salon_id');
+    }
 }
