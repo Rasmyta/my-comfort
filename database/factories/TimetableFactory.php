@@ -22,13 +22,18 @@ class TimetableFactory extends Factory
     public function definition()
     {
         return [
-            'monday' => '11:00–20:00',
-            'tuesday' => '11:00–20:00',
-            'wednesday' => '11:00–20:00',
-            'thursday' => '11:00–20:00',
-            'friday' => '11:00–20:00',
-            'saturday' => '11:00–20:00',
-            'sunday' => 'closed'
+            'monday_start' => '11:00',
+            'monday_end' => '20:00',
+            'tuesday_start' => '11:00',
+            'tuesday_end' => '20:00',
+            'wednesday_start' => '11:00',
+            'wednesday_end' => '20:00',
+            'thursday_start' => '11:00',
+            'thursday_end' => '20:00',
+            'friday_start' => '11:00',
+            'friday_end' => '20:00',
+            'saturday_start' => '11:00',
+            'saturday_end' => '20:00'
         ];
     }
 }
