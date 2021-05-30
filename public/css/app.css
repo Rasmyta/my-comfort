@@ -36874,6 +36874,18 @@ video {
   background-image: radial-gradient(circle farthest-corner at 10% 20%, #3e85ee 1.1%, #e389f0 43.7%, #f3c17c 89.7%);
 }
 
+/* This is to remove the arrow of select element in IE */
+
+.weekDays select::-ms-expand {
+  display: none;
+}
+
+.weekDays select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;
