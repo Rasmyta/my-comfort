@@ -8,12 +8,14 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css">
+    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.css" />
+    <link rel="stylesheet"
+        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css">
 
     @livewireStyles
 
@@ -24,6 +26,8 @@
     <!-- Charts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/intranet/charts-lines.js') }}" defer></script>
     <script src="{{ asset('js/intranet/charts-pie.js') }}" defer></script>
 
@@ -58,7 +62,7 @@
 
     @livewireScripts
 
-     <!-- Tippy Tooltips (Development) -->
+    <!-- Tippy Tooltips (Development) -->
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
     <!-- Tippy Tooltips (Production)
@@ -74,6 +78,27 @@
         tippy("#tooltipExport", {
             content: "No se seleccionaron elementos!",
         });
+
+        $('document').ready(function() {
+            editTimetable();
+        });
+
+        function editTimetable() {
+            let confirm = document.getElementById('confirm-time');
+            [].forEach.call(document.getElementsByClassName('weekDays'), function(row) {
+                let inputs = row.querySelectorAll('input');
+
+                row.addEventListener('dblclick', event => {
+                    inputs.forEach(input => {
+                        input.style.background = '#F9E79F';
+                        input.removeAttribute('disabled');
+
+                        confirm.style.display = 'block';
+                    });
+                });
+
+            });
+        }
 
     </script>
 

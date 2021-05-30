@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Intranet\Salons;
 
 use App\Models\Salon;
 use App\Models\SalonImage;
+use App\Models\Timetable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -16,17 +17,31 @@ class SalonShow extends Component
     public $title;
     public $salon;
     public $columns;
-    public $timetable;
     public $images;
     public $newImages = [];
     public SalonImage $salonImage;
+    public Timetable $timetable;
 
 
     public function rules()
     {
         return [
-            'salonImage.path' => 'required|string',
-            'salonImage.salon_id' => 'required',
+            'timetable.monday_start' => 'nullable|string',
+            'timetable.monday_end' => 'nullable|string',
+            'timetable.tuesday_start' => 'nullable|string',
+            'timetable.tuesday_end' => 'nullable|string',
+            'timetable.wednesday_start' => 'nullable|string',
+            'timetable.wednesday_end' => 'nullable|string',
+            'timetable.thursday_start' => 'nullable|string',
+            'timetable.thursday_end' => 'nullable|string',
+            'timetable.friday_start' => 'nullable|string',
+            'timetable.friday_end' => 'nullable|string',
+            'timetable.saturday_start' => 'nullable|string',
+            'timetable.saturday_end' => 'nullable|string',
+            'timetable.sunday_start' => 'nullable|string',
+            'timetable.sunday_end' => 'nullable|string',
+            'salonImage.path' => 'nullable|string',
+            'salonImage.salon_id' => 'nullable',
             'newImages.*' => 'image'
         ];
     }
@@ -35,6 +50,7 @@ class SalonShow extends Component
     {
         $this->title = $salon->name;
         $this->salon = $salon;
+        $this->timetable = $salon->getTimetable;
         $this->columns = DB::getSchemaBuilder()->getColumnListing('timetables');
         $this->images = $salon->getImages;
     }
@@ -43,6 +59,13 @@ class SalonShow extends Component
     public function render()
     {
         return view('livewire.intranet.salons.salon-show')->layout('layouts.intranet');
+    }
+
+    public function editTimetable()
+    {
+        $this->validate();
+        $this->timetable->save();
+        $this->emitSelf('timetable-saved');
     }
 
     public function saveImages()
@@ -63,7 +86,7 @@ class SalonShow extends Component
                     'path' => Storage::disk('s3')->put('salons', $this->newImages)
                 ]);
 
-                $this->emitSelf('notify-saved');
+                $this->emitSelf('image-saved');
             }
         }
     }
