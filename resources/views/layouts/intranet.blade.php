@@ -74,12 +74,15 @@
 
 
     <script>
-        // Tooltips
-        tippy("#tooltipExport", {
-            content: "No se seleccionaron elementos!",
-        });
-
         $('document').ready(function() {
+            // Tooltips
+            tippy("#tooltipExport", {
+                content: "No se seleccionaron elementos!",
+            });
+            tippy(".tooltipTimetable", {
+                content: "Haz doble click para editar",
+            });
+
             editTimetable();
         });
 

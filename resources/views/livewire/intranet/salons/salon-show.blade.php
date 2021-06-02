@@ -3,6 +3,7 @@
         {{ __($title) }}
     </x-slot>
 
+    <!-- Main Info -->
     <div class="flex gap-8">
         <x-table-show-one class="w-2/3">
             <x-slot name="body">
@@ -30,6 +31,7 @@
             </x-slot>
         </x-table-show-one>
 
+        <!-- Timetable -->
         <form wire:submit.prevent="editTimetable">
             <x-table-show-one class="flex-shrink-0 min-w-80 mx-auto">
                 <x-slot name="head">
@@ -47,8 +49,8 @@
                 <x-slot name="body">
                     <x-table.row>
                         <x-table.heading>{{ __('lunes') }}</x-table.heading>
-                        <x-table.heading class="weekDays">
-                            <div class="flex flex-nowrap">
+                        <x-table.heading class="weekDays dark:weekDays tooltipTimetable">
+                            <div class="flex flex-nowrap dark:text-gray-900">
                                 <input wire:model.defer="{{ 'timetable.monday_start' }}" type="time" disabled>
                                 <input wire:model.defer="{{ 'timetable.monday_end' }}" type="time" disabled>
                             </div>
@@ -56,8 +58,8 @@
                     </x-table.row>
                     <x-table.row>
                         <x-table.heading>{{ __('martes') }}</x-table.heading>
-                        <x-table.heading class="weekDays">
-                            <div class="flex flex-nowrap">
+                        <x-table.heading class="weekDays dark:weekDays tooltipTimetable">
+                            <div class="flex flex-nowrap dark:text-gray-900">
                                 <input wire:model.defer="{{ 'timetable.tuesday_start' }}" type="time" disabled>
                                 <input wire:model.defer="{{ 'timetable.tuesday_end' }}" type="time" disabled>
                             </div>
@@ -65,8 +67,8 @@
                     </x-table.row>
                     <x-table.row>
                         <x-table.heading>{{ __('miércoles') }}</x-table.heading>
-                        <x-table.heading class="weekDays">
-                            <div class="flex flex-nowrap">
+                        <x-table.heading class="weekDays dark:weekDays tooltipTimetable">
+                            <div class="flex flex-nowrap dark:text-gray-900">
                                 <input wire:model.defer="{{ 'timetable.wednesday_start' }}" type="time" disabled>
                                 <input wire:model.defer="{{ 'timetable.wednesday_end' }}" type="time" disabled>
                             </div>
@@ -74,8 +76,8 @@
                     </x-table.row>
                     <x-table.row>
                         <x-table.heading>{{ __('jueves') }}</x-table.heading>
-                        <x-table.heading class="weekDays">
-                            <div class="flex flex-nowrap">
+                        <x-table.heading class="weekDays dark:weekDays tooltipTimetable">
+                            <div class="flex flex-nowrap dark:text-gray-900">
                                 <input wire:model.defer="{{ 'timetable.thursday_start' }}" type="time" disabled>
                                 <input wire:model.defer="{{ 'timetable.thursday_end' }}" type="time" disabled>
                             </div>
@@ -83,8 +85,8 @@
                     </x-table.row>
                     <x-table.row>
                         <x-table.heading>{{ __('viernes') }}</x-table.heading>
-                        <x-table.heading class="weekDays">
-                            <div class="flex flex-nowrap">
+                        <x-table.heading class="weekDays dark:weekDays tooltipTimetable">
+                            <div class="flex flex-nowrap dark:text-gray-900">
                                 <input wire:model.defer="{{ 'timetable.friday_start' }}" type="time" disabled>
                                 <input wire:model.defer="{{ 'timetable.friday_end' }}" type="time" disabled>
                             </div>
@@ -92,8 +94,8 @@
                     </x-table.row>
                     <x-table.row>
                         <x-table.heading>{{ __('sábado') }}</x-table.heading>
-                        <x-table.heading class="weekDays">
-                            <div class="flex flex-nowrap">
+                        <x-table.heading class="weekDays dark:weekDays tooltipTimetable">
+                            <div class="flex flex-nowrap dark:text-gray-900">
                                 <input wire:model.defer="{{ 'timetable.saturday_start' }}" type="time" disabled>
                                 <input wire:model.defer="{{ 'timetable.saturday_end' }}" type="time" disabled>
                             </div>
@@ -101,8 +103,8 @@
                     </x-table.row>
                     <x-table.row>
                         <x-table.heading>{{ __('domingo') }}</x-table.heading>
-                        <x-table.heading class="weekDays">
-                            <div class="flex flex-nowrap">
+                        <x-table.heading class="weekDays dark:weekDays tooltipTimetable">
+                            <div class="flex flex-nowrap dark:text-gray-900">
                                 <input wire:model.defer="{{ 'timetable.sunday_start' }}" type="time" disabled>
                                 <input wire:model.defer="{{ 'timetable.sunday_end' }}" type="time" disabled>
                             </div>
