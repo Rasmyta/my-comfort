@@ -6,7 +6,7 @@
     </x-slot>
 
 
-     @if (session('message'))
+    @if (session('message'))
         <div class="bg-green-500 text-white p-4 w-1/3" role="alert">
             {{ session('message') }}
         </div>
@@ -17,9 +17,9 @@
     @endif
 
 
- <div class="py-12">
+    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white mb-6 overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="mb-6 overflow-hidden sm:rounded-lg">
                 {{-- {{ dd( Cart::content())}} --}}
                 {{-- @forelse (Cart::content() as $item)
                     <p>{{ 'ID: ' . $item->id . ', ' . $item->name }}</p>
@@ -27,43 +27,18 @@
                     <p>Cart is empty</p>
                 @endforelse --}}
 
-                <div class="flex flex-wrap gap-1 justify-items-center justify-start">
+                <!-- Flickity carousel -->
+                <div class="gallery mb-8" data-flickity='{ "cellAlign": "left", "imagesLoaded": true,  "wrapAround": true, "fullscreen": true}'>
                     @foreach ($images as $image)
-                        <img src="{{ Storage::url($image->path) }}" alt="Salon image"
-                            class="max-w-28 h-20 md:max-w-48 md:h-40" />
+                        <div class="gallery-cell">
+                            <img src="{{ Storage::url($image->path) }}" alt="Salon image" />
+                        </div>
                     @endforeach
                 </div>
 
 
-                <!-- Salon Table -->
-                {{-- <div class="">
-                    <x-table>
-                        <x-slot name="head">
-                            <x-table.heading>{{ __('Nombre') }}</x-table.heading>
-                            <x-table.heading>{{ __('Actividad') }}</x-table.heading>
-                            <x-table.heading>{{ __('Dirección') }}</x-table.heading>
-                        </x-slot>
-
-                        <x-slot name="body">
-                            <x-table.row>
-                                <x-table.cell>
-                                    <p class="font-semibold truncate">{{ $salon->name }}</p>
-                                </x-table.cell>
-                                <x-table.cell>
-                                    <p>{{ $salon->getActivity->name }}</p>
-                                </x-table.cell>
-                                <x-table.cell>
-                                    <p>{{ $salon->address . ', ' . $salon->city . ', ' . $salon->postal_code }}
-                                    </p>
-                                </x-table.cell>
-                            </x-table.row>
-
-                        </x-slot>
-                    </x-table>
-                </div> --}}
-
                 <!-- Services -->
-                <div class="">
+                <div class="bg-white ">
                     <x-table>
                         <x-slot name="head">
                             <x-table.heading>{{ __('Nombre') }}</x-table.heading>

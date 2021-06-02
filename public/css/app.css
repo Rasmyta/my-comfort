@@ -36886,6 +36886,26 @@ video {
        appearance: none;
 }
 
+/* Salon images carousel using Flickity*/
+
+.gallery {
+  background-color: rgba(238, 238, 238, 0.5);
+}
+
+.gallery-cell {
+  width: 66%;
+  height: 200px;
+  margin-right: 10px;
+}
+
+.gallery.is-fullscreen .gallery-cell {
+  height: 100%;
+}
+
+.gallery-cell {
+  height: 400px;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;

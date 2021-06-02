@@ -15,3 +15,19 @@ $background-gradient: radial-gradient( circle farthest-corner at 10% 20%, rgba(6
 .weekDays select
     -webkit-appearance: none
     appearance: none
+
+/* Salon images carousel */
+.gallery
+    background-color: rgba(238, 238, 238, 0.5)
+
+    &-cell
+        width: 66%
+        height: 200px
+        margin-right: 10px
+
+.gallery.is-fullscreen .gallery-cell
+    height: 100%
+
+@media screen and ( min-width: 768px )
+.gallery-cell
+    height: 400px
