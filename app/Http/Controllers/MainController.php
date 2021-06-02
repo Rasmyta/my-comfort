@@ -40,17 +40,6 @@ class MainController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showSalon($id)
-    {
-        return view('client.salon', ['salon' => Salon::findOrFail($id)]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

@@ -16,7 +16,7 @@ class Salon extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'employees', 'address', 'city', 'postal_code', 'description'
+        'name', 'employees', 'address', 'city', 'postal_code', 'description', 'timetable_id', 'activity_id', 'user_id'
     ];
 
     public function getServices()

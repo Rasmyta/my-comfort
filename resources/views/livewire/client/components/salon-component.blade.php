@@ -2,7 +2,7 @@
     <a href="{{ route('salon.show', [$salon->id]) }}">
         <div class="flex w-full h-48 bg-white shadow-lg rounded-lg overflow-hidden">
             <div class="w-1/3 bg-cover"
-                style="background-image: url('https://images.unsplash.com/photo-1494726161322-5360d4d0eeae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80')">
+                style="background-image: url('https://cdn.pixabay.com/photo/2019/03/08/20/17/beauty-salon-4043096_960_720.jpg')">
             </div>
             <div class="w-2/3 p-4">
                 <div class="flex flex-row justify-between">

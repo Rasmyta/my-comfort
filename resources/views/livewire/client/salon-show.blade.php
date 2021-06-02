@@ -1,30 +1,38 @@
-<x-app-layout>
+<div>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ $salon->name }}
         </h2>
     </x-slot>
 
-    @if (session('message'))
-        <div class="alert alert-success" role="alert">
+
+     @if (session('message'))
+        <div class="bg-green-500 text-white p-4 w-1/3" role="alert">
             {{ session('message') }}
         </div>
     @elseif($errors->any())
-        <div class="alert alert-danger" role="alert">
+        <div class="bg-red-500 text-white p-4 w-1/3" role="alert">
             {{ $errors->first() }}
         </div>
     @endif
 
 
-    <div class="py-12">
+ <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white mb-6 overflow-hidden shadow-xl sm:rounded-lg">
                 {{-- {{ dd( Cart::content())}} --}}
-                @forelse (Cart::content() as $item)
+                {{-- @forelse (Cart::content() as $item)
                     <p>{{ 'ID: ' . $item->id . ', ' . $item->name }}</p>
                 @empty
                     <p>Cart is empty</p>
-                @endforelse
+                @endforelse --}}
+
+                <div class="flex flex-wrap gap-1 justify-items-center justify-start">
+                    @foreach ($images as $image)
+                        <img src="{{ Storage::url($image->path) }}" alt="Salon image"
+                            class="max-w-28 h-20 md:max-w-48 md:h-40" />
+                    @endforeach
+                </div>
 
 
                 <!-- Salon Table -->
@@ -93,4 +101,4 @@
             </a>
         </div>
     </div>
-</x-app-layout>
+</div>
