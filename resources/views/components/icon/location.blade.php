@@ -1,4 +1,6 @@
-<svg {{ $attributes->merge(['class' => 'inline-block w-5 h-5']) }} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+@props(['width' => 'w-5', 'height' => 'h-5'])
+
+<svg {{ $attributes->merge(['class' => 'inline-block '. $width , $height]) }} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
 <g>
 	<g>
