@@ -19,7 +19,6 @@ const tailwindcss = require("tailwindcss");
 //     ]);
 
 mix.js("resources/js/app.js", "public/js")
-    .js("resources/js/custom.js", "public/js")
     .sass("resources/sass/app.sass", "public/css")
     .options({
         processCssUrls: false,

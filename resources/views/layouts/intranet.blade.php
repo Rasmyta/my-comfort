@@ -67,46 +67,10 @@
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
     <!-- Tippy Tooltips (Production)
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
-
-    <script src="{{ asset('js/custom.js') }}" defer></script>
-    -->
-
-
-    <script>
-        $('document').ready(function() {
-            // Tooltips
-            tippy("#tooltipExport", {
-                content: "No se seleccionaron elementos!",
-            });
-            tippy(".tooltipTimetable", {
-                content: "Haz doble click para editar",
-            });
-
-            editTimetable();
-        });
-
-        function editTimetable() {
-            let confirm = document.getElementById('confirm-time');
-            [].forEach.call(document.getElementsByClassName('weekDays'), function(row) {
-                let inputs = row.querySelectorAll('input');
-
-                row.addEventListener('dblclick', event => {
-                    inputs.forEach(input => {
-                        input.style.background = '#F9E79F';
-                        input.removeAttribute('disabled');
-
-                        confirm.style.display = 'block';
-                    });
-                });
-
-            });
-        }
-
-    </script>
-
+    <script src="https://unpkg.com/tippy.js@6"></script> -->
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="{{ asset('js/custom.js') }}" defer></script>
 
 </body>
 
