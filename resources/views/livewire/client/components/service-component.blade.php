@@ -15,16 +15,13 @@
             @else
                 <p>{{ $arr[0] . ' hora' . ' ' . $arr[1] . ' min' }}</p>
             @endif
-            {{-- @if ($service->getCategory)
-                    <p>{{ $service->getCategory->name }}</p>
-                @endif --}}
         </div>
         <div class="flex flex-row items-center justify-end">
             <p class="text-gray-600 font-semibold pr-2">{{ number_format($service->price, 2) }} €</p>
             <div x-data="{open: @entangle('isSelected')}">
-                <x-button.primary x-show="!open" wire:click="toggleCartItem({{ $service->id }})">Seleccionar
+                <x-button.primary x-show="!open" wire:click="toggleCartItem({{ $service->id }})">{{ __('Seleccionar') }}
                 </x-button.primary>
-                <x-button.bordered x-show="open" wire:click="toggleCartItem({{ $service->id }})">Deseleccionar
+                <x-button.bordered x-show="open" wire:click="toggleCartItem({{ $service->id }})">{{ __('Seleccionado') }}
                 </x-button.bordered>
             </div>
         </div>
