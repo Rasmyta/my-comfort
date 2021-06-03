@@ -20,27 +20,12 @@
         @endif --}}
     </div>
     <div class="flex flex-row items-center justify-end">
-        {{-- test messages --}}
-        @if (session('message'))
-            <div class="bg-green-500 text-white p-4" role="alert">
-                {{ session('message') }}
-            </div>
-        @elseif($errors->any())
-            <div class="bg-red-500 text-white p-4" role="alert">
-                {{ $errors->first() }}
-            </div>
-        @elseif($errors->any())
-            <div class="bg-red-500 text-white p-4" role="alert">
-                {{ $errors->first() }}
-            </div>
-        @endif
-
         <p class="text-gray-600 font-semibold pr-2">{{ number_format($service->price, 2) }} €</p>
-        <div x-data="{open: @entangle('isSelected').defer}">
+        <div x-data="{open: @entangle('isSelected')}">
             <x-button.primary x-show="!open" wire:click="toggleCartItem({{ $service->id }})">Seleccionar
             </x-button.primary>
-            <x-button.primary x-show="open" wire:click="toggleCartItem({{ $service->id }})">Deseleccionar
-            </x-button.primary>
+            <x-button.bordered x-show="open" wire:click="toggleCartItem({{ $service->id }})">Deseleccionar
+            </x-button.bordered>
         </div>
     </div>
 </div>

@@ -39,10 +39,9 @@
                         <x-table.heading>{{ __('Horario') }}</x-table.heading>
                         <x-table.heading>
                             <x-notify.saved notify="timetable-saved" />
-                            <button type="submit" id="confirm-time" style="display: none;"
-                                class="px-3 py-1 text-sm font-medium leading-5 text-purple-600 transition-colors duration-150 border border-4 border-purple-500 rounded-md active:bg-purple-600 hover:bg-purple-500 hover:text-white focus:outline-none focus:shadow-outline-purple">
+                            <x-button.bordered type="submit" id="confirm-time" style="display: none;">
                                 {{ __('Confirmar cambios') }}
-                            </button>
+                            </x-button.bordered>
                         </x-table.heading>
                     </x-table.row>
                 </x-slot>
