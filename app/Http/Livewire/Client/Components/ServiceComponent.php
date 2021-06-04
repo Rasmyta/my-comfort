@@ -5,12 +5,15 @@ namespace App\Http\Livewire\Client\Components;
 use App\Models\Service;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+use Log;
 
 class ServiceComponent extends Component
 {
     public $service;
     public $reservation;
     public $isSelected;
+
+    protected $listeners = ['removeCartItem' => 'remove'];
 
     public function mount(Service $service)
     {
@@ -20,6 +23,7 @@ class ServiceComponent extends Component
     public function render()
     {
         $this->isSelected = $this->hasCartItem($this->service->id);
+        Log::info('Rendering service: ', ['isSelected' => $this->isSelected]);
         return view('livewire.client.components.service-component');
     }
 
@@ -30,9 +34,13 @@ class ServiceComponent extends Component
 
     public function remove($id)
     {
+        Log::info('removing... ', ['id' => $id]);
+
         $item = Cart::content()->where('id', $id)->first();
-        Cart::remove($item->rowId);
-        return redirect()->back()->with('message', 'Removed successfully!');
+        if (isset($item)) {
+            Cart::remove($item->rowId);
+            $this->emitUp('refresh', $id);
+        }
     }
 
     public function add($id)
@@ -47,24 +55,29 @@ class ServiceComponent extends Component
         $service = Service::findOrFail($id);
         if (!empty($currentSalon)) {
             if ($service->getSalon->id != $currentSalon->id) {
-                return redirect()->back()->with('error', 'Solo puede hacer reservas en un mismo establecimiento a la vez.');
+                return redirect()->back()->with('warning', 'Solo puede hacer reservas en un mismo establecimiento a la vez.');
             }
         }
 
         Cart::add($service->id, $service->name, 1, $service->price);
-
-        return redirect()->back()->with('message', 'Añadido! Escoge la hora');
     }
 
 
     public function toggleCartItem($id)
     {
+        Log::info('toggleCartItem: ', ['id' => $id]);
+
         if (Cart::count() && $this->hasCartItem($id)) {
             $this->remove($id);
+            Log::info('removed: ', ['id' => $id]);
         } else {
             $this->add($id);
+            Log::info('added: ', ['id' => $id]);
         }
+
+        $this->emitUp('refresh', $id);
     }
+
 
     public function hasCartItem($id)
     {

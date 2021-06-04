@@ -6,6 +6,7 @@ use App\Models\Salon;
 use App\Models\SalonImage;
 use App\Models\Timetable;
 use Livewire\Component;
+use Log;
 
 class SalonShow extends Component
 {
@@ -15,6 +16,8 @@ class SalonShow extends Component
     public $images;
     public SalonImage $salonImage;
     public Timetable $timetable;
+
+    protected $listeners = ['refresh' => '$refresh'];
 
     public function mount($salonId)
     {
@@ -27,5 +30,11 @@ class SalonShow extends Component
     public function render()
     {
         return view('livewire.client.salon-show')->layout('layouts.app');
+    }
+
+    public function removeCartItem($id)
+    {
+        Log::info('Emitting removeCartItem ', ['id' => $id]);
+        $this->emit('removeCartItem', $id);
     }
 }
