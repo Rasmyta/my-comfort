@@ -42,7 +42,7 @@
 
 
     <!-- Session / error messages -->
-    <x-messages class="w-1/3"></x-messages>
+    <x-notify.messages class="w-1/3"></x-notify.messages>
 
     <!-- Content -->
     <div class="bg-white mb-8 p-8 text-gray-500 sm:rounded-lg">
@@ -59,7 +59,7 @@
                                     class="fas fa-times p-2 cursor-pointer"></i>
                             </p>
                         @endforeach
-                        <a href="#">
+                        <a href="{{ route('availability', [$salon->id]) }}">
                             <div class="text-center text-lg font-semibold text-gray-600 py-2 px-4 my-3 rounded-full transition-colors duration-150 bg-yellow-200 hover:bg-yellow-300 hover:bg-opacity-75">
                                 <p>{{ Cart::subtotal() }} €</p>
                                 <p>{{ __('Escoge la hora') }}</p>

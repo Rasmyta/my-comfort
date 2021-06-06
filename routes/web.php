@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MainController;
 use App\Http\Livewire\Client\CartIndex;
+use App\Http\Livewire\Client\ReservationAvailability;
 use App\Http\Livewire\Client\SalonShow as ClientSalonShow;
 use App\Http\Livewire\Client\SalonsIndex;
 use App\Http\Livewire\Intranet\Dashboard\AdminDashboard;
@@ -29,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome')->name('welcome');
 Route::get('salons/{category}', SalonsIndex::class)->name('salons');
 Route::get('salon/{salonId}', ClientSalonShow::class)->name('salon.show'); // SalonShow::class
+Route::get('reservation/availability/{salon}', ReservationAvailability::class)->name('availability');
 
 /**
  * LOGGED IN (CLIENT)

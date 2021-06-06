@@ -13,24 +13,34 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Icons -->
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    <!-- Alpine -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="{{ asset('js/intranet/init-alpine.js') }}"></script>
+
+    @livewireStyles
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 
-<body>
-    <div class="font-sans text-gray-900 antialiased">
+<body class="font-sans antialiased">
+    <!-- Page Content -->
+    <main id="app-container" class="text-gray-600" style="min-height: 100vh;">
         {{ $slot }}
-    </div>
+    </main>
 
-    <!-- Tippy Tooltips (Development) -->
-    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
-    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
-    <!-- Tippy Tooltips (Production)
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
-    -->
-    <script src="{{ asset('js/custom.js') }}" defer></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+
+    @livewireScripts
+    @stack('scripts')
 
 </body>
 

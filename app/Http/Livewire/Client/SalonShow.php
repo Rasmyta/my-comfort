@@ -35,6 +35,6 @@ class SalonShow extends Component
     public function removeCartItem($id)
     {
         Log::info('Emitting removeCartItem ', ['id' => $id]);
-        $this->emit('removeCartItem', $id);
+        $this->emitTo('client.components.service-component', 'removeCartItem', $id);
     }
 }
