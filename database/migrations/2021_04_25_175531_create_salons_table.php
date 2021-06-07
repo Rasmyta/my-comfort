@@ -16,14 +16,16 @@ class CreateSalonsTable extends Migration
         Schema::create('salons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('cif');
             $table->integer('employees');
             $table->string('address');
             $table->string('city');
             $table->integer('postal_code');
             $table->text('description')->nullable();
             $table->foreignId('activity_id')->constrained('activities')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('timetable_id')->constrained('timetables')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('timetable_id')->nullable()->constrained('timetables')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('visible');
             $table->timestamps();
         });
     }

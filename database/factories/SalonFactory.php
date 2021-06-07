@@ -25,6 +25,10 @@ class SalonFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'cif' => $this->faker->randomElement(["A", "B", "C", "D", "E", "F", "G", "H", "K", "L", "M", "N", "P", "Q", "S"])
+                . $this->faker->numberBetween(10, 99)
+                . $this->faker->randomNumber(5, true)
+                . $this->faker->regexify('[A-Z]'),
             'employees' => $this->faker->randomDigitNotNull,
             'address' => $this->faker->streetAddress,
             'city' => $this->faker->city,
