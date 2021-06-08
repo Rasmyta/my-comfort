@@ -43,17 +43,22 @@
 
                 @guest
                     @if (Route::has('login'))
-                        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                            <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+                        <div class="hidden pl-6 py-4 sm:block">
+                            <a href="{{ route('login') }}"
+                                class="text-sm text-gray-700 underline">{{ __('Iniciar sesión') }}</a>
 
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}"
-                                    class="ml-4 text-sm text-gray-700 underline">Register</a>
+                                    class="ml-4 text-sm text-gray-700 underline">{{ __('Registrarse') }}</a>
                             @endif
+
                         </div>
                     @endif
                 @endguest
-
+                <div class="hidden pr-6 py-4 sm:block">
+                    <a href="{{ route('create.salon') }}"
+                        class="ml-4 text-sm text-gray-700 underline">{{ __('Registra tu negocio') }}</a>
+                </div>
 
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -238,8 +243,9 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                        <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                                        this.closest('form').submit();">
+                        <x-jet-responsive-nav-link href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                                                                                                    this.closest('form').submit();">
                             {{ __('Log Out') }}
                         </x-jet-responsive-nav-link>
                     </form>

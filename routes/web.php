@@ -31,6 +31,9 @@ Route::view('/', 'welcome')->name('welcome');
 Route::get('salons/{category}', SalonsIndex::class)->name('salons');
 Route::get('salon/{salonId}', ClientSalonShow::class)->name('salon.show'); // SalonShow::class
 Route::get('reservation/availability/{salon}', ReservationAvailability::class)->name('availability');
+Route::post('register-salon', [MainController::class, 'storeSalon'])->name('store.salon');
+Route::get('register-salon/create', [MainController::class, 'createSalon'])->name('create.salon');
+
 
 /**
  * LOGGED IN (CLIENT)
