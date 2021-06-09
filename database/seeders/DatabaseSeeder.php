@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'phone' => $faker->mobileNumber,
-            'postal_code' => $faker->postcode,
             'password' => bcrypt('12345678'),
             'remember_token' => Str::random(10),
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
