@@ -5,12 +5,15 @@
             <div class="lg:flex">
                 <div class="w-full lg:w-2/3">
                     <div class="lg:flex">
-                        <div class="w-full mb-12 lg:mb-0 lg:w-1/2">
-                            <h2 class="font-bold text-xl text-gray-100 mb-4">MyComfort</h2>
+                        <div class="w-full mb-12 lg:mb-0">
+                            <h2 class="font-bold text-xl text-gray-100 mb-4">My Comfort</h2>
                             <p class="text-gray-400">
-                                Web2tailwind.com is a site for developer, student and learner,
-                                where they can grab
-                                hundreds of various html component code and try online as fast as posible without...</p>
+                                Una plataforma de reserva de belleza online las 24 horas del día, los 7 días de la
+                                semana que permite que los clientes y los propietarios de los salones sean quienes están
+                                en control, permitiéndote reservar a la hora y el precio que más se ajustan a tus
+                                necesidades y que te dan todo el know-how en cuanto estilo necesario para que puedas
+                                verte y sentirte genial. Somos el lugar donde se pueden expresar tal y como son, cada
+                                día.</p>
                             <div class="flex mt-6">
                                 <a href="#" target="_blank" style="background-color: #3B5998;"
                                     class="flex items-center justify-center h-12 w-12 mr-1 rounded-full fill-current text-white text-xl">
@@ -31,7 +34,7 @@
                             </div>
                         </div>
                         <div class="w-full lg:w-1/2 lg:flex lg:px-6 ">
-                            <div class="w-full mb-6 lg:mb-0 lg:w-1/2">
+                            <div class="w-full mb-6 lg:mb-0">
                                 <h2 class="font-bold text-gray-100 mb-4">
                                     Useful Links</h2>
                                 <ul class="text-gray-500 text-sm">
@@ -42,17 +45,7 @@
                                     <li class="pt-1 pb-2">Privacy Policy</li>
                                 </ul>
                             </div>
-                            <div class="w-full mb-6 lg:mb-0 lg:w-1/2">
-                                <h2 class="font-bold text-gray-100 mb-4">
-                                    Our sevices</h2>
-                                <ul class="text-gray-500 text-sm">
-                                    <li class="pt-1 pb-2">Web Design</li>
-                                    <li class="pt-1 pb-2">Web Development</li>
-                                    <li class="pt-1 pb-2">Product Management</li>
-                                    <li class="pt-1 pb-2">Marketing</li>
-                                    <li class="pt-1 pb-2">Graphics Design</li>
-                                </ul>
-                            </div>
+
                         </div>
                     </div>
                 </div>
