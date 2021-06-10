@@ -3,9 +3,56 @@
         {{ __($title) }}
     </x-slot>
 
-    @include("intranet.actions")
+    <!-- Actions -->
+    <div class="flex mb-3 justify-between items-center">
+        <div class="flex space-x-4 items-center">
+            <x-input.search wire:model="filters.search" placeholder="Buscar..." />
 
-     <!-- Advanced Search -->
+            <div>
+                @if (Route::has('intranet.salons.index'))
+                    <div
+                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input wire:click="toggleShowNewSalons" type="checkbox" name="toggle" id="toggle"
+                            class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+                        <label for="toggle"
+                            class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                    </div>
+                    <label for="toggle"
+                        class="text-purple-600 text-sm font-medium leading-5 m-0">{{ __('Nuevos') }}</label>
+                @endif
+            </div>
+
+            <x-button.link wire:click="toggleShowFilters">
+                @if ($showFilters) Ocultar @endif Búsqueda
+                Avanzada...
+            </x-button.link>
+        </div>
+        <div class="space-x-2 flex items-center">
+            <x-input.group borderless paddingless for="perPage" label="Por Página">
+                <x-input.select wire:model="perPage" id="perPage">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </x-input.select>
+            </x-input.group>
+            @if ($selected)
+                <div>
+                    <x-button.primary wire:click="exportSelected">
+                        <x-icon.download /> <span>{{ __('Exportar') }}</span>
+                    </x-button.primary>
+                </div>
+            @else
+                <div id="tooltipExport">
+                    <x-button.primary disabled>
+                        <x-icon.download /> <span>{{ __('Exportar') }}</span>
+                    </x-button.primary>
+                </div>
+            @endif
+        </div>
+    </div>
+
+
+    <!-- Advanced Search -->
     <div>
         @if ($showFilters)
             <div class="bg-cool-gray-200 p-4 rounded shadow-inner flex relative">
@@ -43,13 +90,13 @@
                     :direction="$sortField === 'name' ? $sortDirection : null" class="w-full">
                     {{ __('Nombre') }}</x-table.heading>
                 <x-table.heading>{{ __('Actividad') }}</x-table.heading>
+                <x-table.heading>{{ __('Gestor') }}</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('employees')"
                     :direction="$sortField === 'employees' ? $sortDirection : null">{{ __('Empleados') }}
                 </x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('address')"
                     :direction="$sortField === 'address' ? $sortDirection : null">{{ __('Dirección') }}
                 </x-table.heading>
-                <x-table.heading>{{ __('Gestor') }}</x-table.heading>
                 <x-table.heading>{{ __('Registrado') }}</x-table.heading>
             </x-slot>
 
@@ -78,24 +125,54 @@
                         </x-table.cell>
                         <x-table.cell>
                             <div class="flex items-center space-x-1 text-sm">
-                                <x-button.link wire:click="edit({{ $salon->id }})" aria-label="Edit"><x-icon.edit></x-icon.edit></x-button.link>
-                                <x-button.link wire:click="delete({{ $salon->id }})" aria-label="Delete"><x-icon.trash></x-icon.trash></x-button.link>
-                                <a href="{{ route('intranet.salon.show', [$salon->id]) }}"><x-button.link  aria-label="View"><x-icon.view></x-icon.view></x-button.link></a>
+                                <x-button.link wire:click="edit({{ $salon->id }})" aria-label="Edit">
+                                    <x-icon.edit></x-icon.edit>
+                                </x-button.link>
+                                <x-button.link wire:click="delete({{ $salon->id }})" aria-label="Delete">
+                                    <x-icon.trash></x-icon.trash>
+                                </x-button.link>
+                                <a href="{{ route('intranet.salon.show', [$salon->id]) }}">
+                                    <x-button.link aria-label="View">
+                                        <x-icon.view></x-icon.view>
+                                    </x-button.link>
+                                </a>
+                                @if ($this->showNewSalons)
+                                    <x-button.primary wire:click="generateAccess({{ $salon->id }})">
+                                        {{ __('Generar Acceso') }}</x-button.primary>
+                                @endif
                             </div>
                         </x-table.cell>
-                        <x-table.cell><p class="font-semibold truncate">{{ $salon->name }}</p></x-table.cell>
-                        <x-table.cell><p>{{ $salon->getActivity->name }}</p></x-table.cell>
-                        <x-table.cell><p>{{ $salon->employees }}</p></x-table.cell>
-                        <x-table.cell><p>{{ $salon->address . ', ' . $salon->city . ', ' . $salon->postal_code }}</p></x-table.cell>
-                        <x-table.cell><x-button.link>{{ $salon->getManager->name }}</x-button.link></x-table.cell>
-                        <x-table.cell><p>{{ $salon->created_at }}</p></x-table.cell>
+                        <x-table.cell>
+                            <p class="font-semibold truncate">{{ $salon->name }}</p>
+                        </x-table.cell>
+                        <x-table.cell>
+                            <p>{{ $salon->getActivity->name }}</p>
+                        </x-table.cell>
+                        <x-table.cell>
+                            @if (isset($salon->getManager))
+                                <x-button.link>{{ $salon->getManager->name }}</x-button.link>
+                            @else
+                                <x-button.primary wire:click="asignUser({{ $salon->id }})">
+                                    {{ __('Asignar gestor') }}</x-button.primary>
+                            @endif
+                        </x-table.cell>
+                        <x-table.cell>
+                            <p>{{ $salon->employees }}</p>
+                        </x-table.cell>
+                        <x-table.cell>
+                            <p>{{ $salon->address . ', ' . $salon->city . ', ' . $salon->postal_code }}</p>
+                        </x-table.cell>
+                        <x-table.cell>
+                            <p>{{ $salon->created_at }}</p>
+                        </x-table.cell>
                     </x-table.row>
                 @empty
                     <x-table.row>
                         <x-table.cell colspan="8">
                             <div class="flex justify-center items-center space-x-2">
                                 <x-icon.inbox class="h-8 w-8 text-cool-gray-400" />
-                                <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No se encontraron salones ...') }}</span>
+                                <span
+                                    class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No se encontraron salones ...') }}</span>
                             </div>
                         </x-table.cell>
                     </x-table.row>
@@ -108,6 +185,28 @@
         </x-table.pagination>
     </div>
 
+
+    <!-- Generate Access -->
+    <div>
+        <form wire:submit.prevent="saveGenerateAccess">
+            <x-modal.dialog wire:model.defer="showGenerateAccessModal">
+                <x-slot name="title">{{ $titleModal }}</x-slot>
+                <x-slot name="content">
+                    <x-input.group for="email" label="Email de gestor">
+                         @if (isset($manager)) <x-input.text id="email" value="{{ $manager->email }}" readonly></x-input.text>  @endif
+                    </x-input.group>
+                    <x-input.group for="password" label="Contraseña" :error="$errors->first('password')">
+                        <x-input.text wire:model="password" id="password" autofocus/>
+                    </x-input.group>
+                </x-slot>
+                <x-slot name="footer">
+                    <x-button.secondary wire:click="$set('showGenerateAccessModal', false)">{{ __('Cancelar') }}
+                    </x-button.secondary>
+                    <x-button.primary type="submit">{{ __('Enviar') }}</x-button.primary>
+                </x-slot>
+            </x-modal.dialog>
+        </form>
+    </div>
 
     <!-- Update / Create Modal -->
     <div>

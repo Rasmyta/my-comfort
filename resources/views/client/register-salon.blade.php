@@ -10,7 +10,13 @@
             </x-slot>
 
              <!-- Session / error messages -->
-                <x-notify.messages></x-notify.messages>
+               <div>
+                @if (session('message'))
+                    <div class="bg-green-100 text-gray-600 text-sm p-2 mb-1 rounded-lg">
+                        <i class="far fa-check-circle"></i> {{ session('message') }}
+                    </div>
+                @endif
+            </div>
 
             <x-jet-validation-errors class="mb-4" />
 
@@ -25,10 +31,9 @@
 
                 <div>
                     <x-jet-label for="activity_id" value="{{ __('Actividad') }}" />
-                    <select id="activity_id" class="block mt-1 mb-2 pb-1 w-full" name="activity_id"
-                        :value="old('activity_id')" required>
+                    <select id="activity_id" class="block mt-1 mb-2 pb-1 w-full" name="activity_id" :value="old('activity_id')" required>
                         <option value="" readonly>{{ __('Selecciona...') }}</option>
-                        @foreach (App\Models\Activity::all() as $activity)
+                        @foreach ($activities as $activity)
                             <option value="{{ $activity->id }}">{{ $activity->name }}</option>
                         @endforeach
                     </select>
@@ -58,15 +63,33 @@
                         required />
                 </div>
 
-                <div class="mt-4">
+                <div class="my-4 border-b border-indigo-500">
                     <x-jet-label for="postal_code" value="{{ __('Código postal') }}" />
                     <x-jet-input id="postal_code" class="block mt-1 w-full" type="text" name="postal_code"
                         :value="old('postal_code')" required />
                 </div>
 
+                <div>
+                    <x-jet-label for="clientName" value="{{ __('Tu Nombre') }}" />
+                    <x-jet-input id="clientName" class="block mt-1 w-full" type="text" name="clientName" :value="old('clientName')"
+                        required />
+                </div>
+
+                <div>
+                    <x-jet-label for="clientSurname" value="{{ __('Tus Apellidos') }}" />
+                    <x-jet-input id="clientSurname" class="block mt-1 w-full" type="text" name="clientSurname" :value="old('clientSurname')"
+                        required />
+                </div>
+
                 <div class="mt-4">
                     <x-jet-label for="email" value="{{ __('Tu Email') }}" />
                     <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                        required />
+                </div>
+
+                <div class="mt-4">
+                    <x-jet-label for="phone" value="{{ __('Tu Número de Teléfono') }}" />
+                    <x-jet-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')"
                         required />
                 </div>
 

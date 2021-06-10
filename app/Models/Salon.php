@@ -53,4 +53,11 @@ class Salon extends Model
             ->having('category_id', $categoryId)
             ->get();
     }
+
+    public static function getNewSalons()
+    {
+        return Salon::whereHas('getManager', function ($query) {
+            $query->where('password', "");
+        });
+    }
 }

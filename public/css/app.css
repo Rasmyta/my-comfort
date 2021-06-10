@@ -36906,6 +36906,17 @@ video {
   height: 400px;
 }
 
+/* CHECKBOX TOGGLE SWITCH */
+
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #f472b6;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #f472b6;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;

@@ -24,9 +24,6 @@
                     </x-input.group>
                 </div>
                 <div class="w-1/2 pl-2 space-y-4">
-                    <x-input.group inline for="filter-postal_code" label="Código postal">
-                        <x-input.text wire:model.lazy="filters.postal_code" id="filter-postal-code" />
-                    </x-input.group>
                     <x-input.group inline for="filter-phone" label="Teléfono">
                         <x-input.text wire:model.lazy="filters.phone" id="filter-phone" />
                     </x-input.group>

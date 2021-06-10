@@ -28,8 +28,7 @@ class UserIndex extends Component
         'search' => '',
         'email' => '',
         'phone' => '',
-        'role_id' => '',
-        'postal_code' => ''
+        'role_id' => ''
     ];
     protected $queryString = ['sortField', 'sortDirection'];
 
@@ -40,7 +39,6 @@ class UserIndex extends Component
             'editing.surname' => 'required',
             'editing.email' => 'required|email:rfc,filter',
             'editing.phone' => 'required|max:20',
-            'editing.postal_code' => 'required|numeric|max:5',
             'editing.role_id' => 'required|numeric'
         ];
     }
@@ -63,7 +61,6 @@ class UserIndex extends Component
             ->when($this->filters['email'], fn ($query, $email) => $query->where('email', 'like', '%' . $email . '%'))
             ->when($this->filters['phone'], fn ($query, $phone) => $query->where('phone', $phone))
             ->when($this->filters['role_id'], fn ($query, $role) => $query->where('role_id', $role))
-            ->when($this->filters['postal_code'], fn ($query, $postal_code) => $query->where('postal_code', $postal_code))
             ->orderBy($this->sortField, $this->sortDirection);
 
         return $this->applySorting($query);

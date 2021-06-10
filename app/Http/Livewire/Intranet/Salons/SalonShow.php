@@ -50,9 +50,10 @@ class SalonShow extends Component
     {
         $this->title = $salon->name;
         $this->salon = $salon;
-        $this->timetable = $salon->getTimetable;
         $this->columns = DB::getSchemaBuilder()->getColumnListing('timetables');
         $this->images = $salon->getImages;
+
+        if(isset($salon->getTimetable)) $this->timetable = $salon->getTimetable;
     }
 
 

@@ -22,7 +22,11 @@
                 </x-table.row>
                 <x-table.row>
                     <x-table.heading>{{ __('Gestor') }}</x-table.heading>
-                    <x-table.cell>{{ $salon->getManager->name }}</x-table.cell>
+                    @if ($salon->getManager)
+                        <x-table.cell>{{ $salon->getManager->name }}</x-table.cell>
+                    @else
+                        <x-table.cell></x-table.cell>
+                    @endif
                 </x-table.row>
                 <x-table.row>
                     <x-table.heading>{{ __('Descripción') }}</x-table.heading>
@@ -32,7 +36,8 @@
         </x-table-show-one>
 
         <!-- Timetable -->
-        <form wire:submit.prevent="editTimetable">
+        @if ($timetable)
+            <form wire:submit.prevent="editTimetable">
             <x-table-show-one class="flex-shrink-0 min-w-80 mx-auto">
                 <x-slot name="head">
                     <x-table.row>
@@ -112,6 +117,7 @@
                 </x-slot>
             </x-table-show-one>
         </form>
+        @endif
     </div>
 
     <!-- Photos -->

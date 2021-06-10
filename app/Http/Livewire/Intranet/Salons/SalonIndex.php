@@ -6,7 +6,11 @@ use App\Http\Livewire\Traits\WithSorting;
 use App\Http\Livewire\Traits\WithBulkActions;
 use App\Models\Activity;
 use App\Models\Salon;
+use App\Models\User;
+use DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Rules\Password;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,12 +26,17 @@ class SalonIndex extends Component
     public $showFilters = false;
     public $showEditModal = false;
     public $showDeleteModal = false;
+    public $showNewSalons = false;
+    public $showGenerateAccessModal = false;
     public Collection $activities;
     public Salon $editing;
+    public User $manager;
+    public $password;
     public $filters = [
         'search' => '',
-        'activity_id' => '',
-        'city' => ''
+        'city' => '',
+        'user_id' => '',
+        'activity_id' => ''
     ];
     protected $queryString = ['sortField', 'sortDirection'];
 
@@ -40,7 +49,8 @@ class SalonIndex extends Component
             'editing.city' => 'required',
             'editing.postal_code' => 'required|numeric',
             'editing.description' => 'nullable',
-            'editing.activity_id' => 'required|numeric'
+            'editing.activity_id' => 'required|numeric',
+            'password' => ['required', 'string', new Password]
         ];
     }
 
@@ -62,6 +72,8 @@ class SalonIndex extends Component
             ->when($this->filters['city'], fn ($query, $city) => $query->where('city', 'like', '%' . $city . '%'))
             ->when($this->filters['search'], fn ($query, $search) => $query->where('name', 'like', '%' . $search . '%'))
             ->orderBy($this->sortField, $this->sortDirection);
+
+        if ($this->showNewSalons) $query = Salon::getNewSalons()->orderBy($this->sortField, $this->sortDirection);
 
         return $this->applySorting($query);
     }
@@ -115,10 +127,21 @@ class SalonIndex extends Component
         $this->showFilters = !$this->showFilters;
     }
 
-    public function resetFilters() { $this->reset('filters'); }
+    public function toggleShowNewSalons()
+    {
+        $this->showNewSalons = !$this->showNewSalons;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset('filters');
+    }
 
     // Resets the page when the 'filters' are updated
-    public function updatedFilters() { $this->resetPage(); }
+    public function updatedFilters()
+    {
+        $this->resetPage();
+    }
 
     public function exportSelected()
     {
@@ -127,5 +150,34 @@ class SalonIndex extends Component
         }, 'salones.csv');
     }
 
-    private function makeBlankSalon() {return Salon::make(); }
+    private function makeBlankSalon()
+    {
+        return Salon::make();
+    }
+
+
+    /**
+     * Create and asign new user to the salon
+     */
+    public function saveGenerateAccess()
+    {
+        $this->validateOnly('password');
+
+        DB::table('users')
+            ->where('id', $this->manager->id)
+            ->update([
+                'password' => Hash::make($this->password)
+            ]);
+
+        // envio de contraseña al email de gestor
+
+        $this->showGenerateAccessModal = false;
+    }
+
+    public function generateAccess(Salon $salon)
+    {
+        $this->manager = $salon->getManager;
+        $this->titleModal = "Generar acceso para gestor";
+        $this->showGenerateAccessModal = true;
+    }
 }
