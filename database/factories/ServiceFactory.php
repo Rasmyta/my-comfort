@@ -26,7 +26,7 @@ class ServiceFactory extends Factory
             'duration' => $this->faker->randomElement([1.3, 1, 0.3]),
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 10, 50),
-            'salon_id' => $this->faker->numberBetween(1, 10),
+            'salon_id' => $this->faker->numberBetween(1, 6),
             'category_id' => $this->faker->numberBetween(1, 6)
         ];
     }
