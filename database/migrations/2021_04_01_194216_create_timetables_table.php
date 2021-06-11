@@ -15,20 +15,20 @@ class CreateTimetablesTable extends Migration
     {
         Schema::create('timetables', function (Blueprint $table) {
             $table->id();
-            $table->string('monday_start');
-            $table->string('monday_end');
-            $table->string('tuesday_start');
-            $table->string('tuesday_end');
-            $table->string('wednesday_start');
-            $table->string('wednesday_end');
-            $table->string('thursday_start');
-            $table->string('thursday_end');
-            $table->string('friday_start');
-            $table->string('friday_end');
-            $table->string('saturday_start');
-            $table->string('saturday_end');
-            $table->string('sunday_start');
-            $table->string('sunday_end');
+            $table->string('monday_start')->nullable();
+            $table->string('monday_end')->nullable();
+            $table->string('tuesday_start')->nullable();
+            $table->string('tuesday_end')->nullable();
+            $table->string('wednesday_start')->nullable();
+            $table->string('wednesday_end')->nullable();
+            $table->string('thursday_start')->nullable();
+            $table->string('thursday_end')->nullable();
+            $table->string('friday_start')->nullable();
+            $table->string('friday_end')->nullable();
+            $table->string('saturday_start')->nullable();
+            $table->string('saturday_end')->nullable();
+            $table->string('sunday_start')->nullable();
+            $table->string('sunday_end')->nullable();
             $table->timestamps();
         });
     }
