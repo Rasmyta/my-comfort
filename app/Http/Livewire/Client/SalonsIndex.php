@@ -13,7 +13,7 @@ class SalonsIndex extends Component
 
     public function mount($category)
     {
-        $categoryId = Category::where('name', '=', $category)->get()->first()->id;
+        $categoryId = Category::where('route_name', '=', $category)->get()->first()->id;
         $this->salons = Salon::salonsByCategory($categoryId);
     }
 

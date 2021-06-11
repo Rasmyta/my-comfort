@@ -6,6 +6,7 @@ use App\Http\Livewire\Traits\WithSorting;
 use App\Http\Livewire\Traits\WithBulkActions;
 use App\Models\Role;
 use App\Models\User;
+use DB;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -57,7 +58,7 @@ class UserIndex extends Component
     public function getRowsQueryProperty()
     {
         $query = User::query()
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('name', 'like', '%' . $search . '%')) // surname ???
+            ->when($this->filters['search'], fn ($query, $search) => $query-> where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%'))
             ->when($this->filters['email'], fn ($query, $email) => $query->where('email', 'like', '%' . $email . '%'))
             ->when($this->filters['phone'], fn ($query, $phone) => $query->where('phone', $phone))
             ->when($this->filters['role_id'], fn ($query, $role) => $query->where('role_id', $role))

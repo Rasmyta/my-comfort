@@ -69,8 +69,8 @@ class SalonIndex extends Component
     {
         $query = Salon::query()
             ->when($this->filters['activity_id'], fn ($query, $activity) => $query->where('activity_id', $activity))
-            ->when($this->filters['city'], fn ($query, $city) => $query->where('city', 'like', '%' . $city . '%'))
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('name', 'like', '%' . $search . '%'))
+            ->when($this->filters['city'], fn ($query, $city) => $query->where(DB::raw('lower(city)'), 'like', '%' . strtolower($city) . '%'))
+            ->when($this->filters['search'], fn ($query, $search) => $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%'))
             ->orderBy($this->sortField, $this->sortDirection);
 
         if ($this->showNewSalons) $query = Salon::getNewSalons()->orderBy($this->sortField, $this->sortDirection);

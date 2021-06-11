@@ -7,6 +7,7 @@ use App\Http\Livewire\Traits\WithBulkActions;
 use App\Models\Category;
 use App\Models\Salon;
 use App\Models\Service;
+use DB;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -67,7 +68,7 @@ class ServiceIndex extends Component
     public function getRowsQueryProperty()
     {
         $query = Service::query()
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('name', 'like', '%' . $search . '%'))
+            ->when($this->filters['search'], fn ($query, $search) => $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%'))
             ->when($this->filters['duration-min'], fn ($query, $duration) => $query->where('duration', '>=', $duration))
             ->when($this->filters['duration-max'], fn ($query, $duration) => $query->where('duration', '<=', $duration))
             ->when($this->filters['price-min'], fn ($query, $price) => $query->where('price', '>=', $price))
