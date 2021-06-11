@@ -57,12 +57,12 @@ class DatabaseSeeder extends Seeder
 
         Timetable::factory()->create();
 
-        Salon::factory(2)->create(['activity_id' => 1]);
-        Salon::factory(2)->create(['activity_id' => 2]);
-        Salon::factory(2)->create(['activity_id' => 3]);
-        Salon::factory(2)->create(['activity_id' => 4]);
-        Salon::factory(2)->create(['activity_id' => 5]);
-        Salon::factory(2)->create(['activity_id' => 6]);
+        Salon::factory(1)->create(['activity_id' => 1]);
+        Salon::factory(1)->create(['activity_id' => 2]);
+        Salon::factory(1)->create(['activity_id' => 3]);
+        Salon::factory(1)->create(['activity_id' => 4]);
+        Salon::factory(1)->create(['activity_id' => 5]);
+        Salon::factory(1)->create(['activity_id' => 6]);
 
         Category::create(['name' => 'Peluquería', 'route_name' => 'peluqueria']);
         Category::create(['name' => 'Uñas', 'route_name' => 'unas']);
