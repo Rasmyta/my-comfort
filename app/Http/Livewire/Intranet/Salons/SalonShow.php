@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Intranet\Salons;
 use App\Models\Salon;
 use App\Models\SalonImage;
 use App\Models\Timetable;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -12,7 +13,7 @@ use Livewire\WithFileUploads;
 
 class SalonShow extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, AuthorizesRequests;
 
     public $title;
     public $salon;
@@ -59,6 +60,7 @@ class SalonShow extends Component
 
     public function render()
     {
+        $this->authorize('view', $this->salon);
         return view('livewire.intranet.salons.salon-show')->layout('layouts.intranet');
     }
 

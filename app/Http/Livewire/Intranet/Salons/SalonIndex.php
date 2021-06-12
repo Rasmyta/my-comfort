@@ -7,8 +7,10 @@ use App\Http\Livewire\Traits\WithBulkActions;
 use App\Models\Activity;
 use App\Models\Salon;
 use App\Models\User;
+use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Rules\Password;
 use Livewire\Component;
@@ -16,7 +18,7 @@ use Livewire\WithPagination;
 
 class SalonIndex extends Component
 {
-    use WithPagination, WithSorting, WithBulkActions;
+    use WithPagination, WithSorting, WithBulkActions, AuthorizesRequests;
 
     public $search = "";
     public $deleteId = "";
@@ -67,13 +69,22 @@ class SalonIndex extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = Salon::query()
+        if (Auth::user()->getRole->name === 'admin') {
+            $query = Salon::query()
             ->when($this->filters['activity_id'], fn ($query, $activity) => $query->where('activity_id', $activity))
             ->when($this->filters['city'], fn ($query, $city) => $query->where(DB::raw('lower(city)'), 'like', '%' . strtolower($city) . '%'))
             ->when($this->filters['search'], fn ($query, $search) => $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%'))
             ->orderBy($this->sortField, $this->sortDirection);
 
-        if ($this->showNewSalons) $query = Salon::getNewSalons()->orderBy($this->sortField, $this->sortDirection);
+            if ($this->showNewSalons) $query = Salon::getNewSalons()->orderBy($this->sortField, $this->sortDirection);
+        }else{
+            $query = Salon::query()
+            ->where('user_id', Auth::id())
+            ->when($this->filters['activity_id'], fn ($query, $activity) => $query->where('activity_id', $activity))
+            ->when($this->filters['city'], fn ($query, $city) => $query->where(DB::raw('lower(city)'), 'like', '%' . strtolower($city) . '%'))
+            ->when($this->filters['search'], fn ($query, $search) => $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%'))
+            ->orderBy($this->sortField, $this->sortDirection);
+        }
 
         return $this->applySorting($query);
     }
@@ -86,6 +97,7 @@ class SalonIndex extends Component
 
     public function create()
     {
+        $this->authorize('create');
         // If object has a key, then it is in the DB and we can safely overwrite it.
         if ($this->editing->getKey()) $this->editing = $this->makeBlankSalon();
 
@@ -95,6 +107,7 @@ class SalonIndex extends Component
 
     public function edit(Salon $salon)
     {
+        $this->authorize('update', $salon);
         // If 'editing' is not equal to 'salon' passed as parameter, then we can override 'editing'.
         if ($this->editing->isNot($salon)) $this->editing = $salon;
 
@@ -111,6 +124,7 @@ class SalonIndex extends Component
 
     public function delete($salonId)
     {
+        $this->authorize('delete', Salon::findOrFail($salonId));
         $this->showDeleteModal = true;
         $this->deleteId = $salonId;
     }

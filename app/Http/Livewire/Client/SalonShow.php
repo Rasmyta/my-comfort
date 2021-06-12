@@ -23,8 +23,11 @@ class SalonShow extends Component
     {
         $this->salon = Salon::findOrFail($salonId);
         $this->title = $this->salon->name;
-        $this->timetable = $this->salon->getTimetable;
         $this->images = $this->salon->getImages;
+
+        if (isset($this->salon->getTimetable)) {
+            $this->timetable = $this->salon->getTimetable;
+        }
     }
 
     public function render()

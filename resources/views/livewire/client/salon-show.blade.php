@@ -103,9 +103,11 @@
                     <p>{{ $salon->city }}</p>
                     <p>{{ $salon->postal_code }}</p>
                 </div>
-                <!-- Timetable Component -->
-                @livewire('client.components.timetable', ['timetable' => $timetable])
 
+                <!-- Timetable Component -->
+                @if ($timetable)
+                    @livewire('client.components.timetable', ['timetable' => $timetable])
+                @endif
             </div>
 
             <div class="my-4 w-2/3">

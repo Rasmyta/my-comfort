@@ -18,7 +18,7 @@ class SalonPolicy
      */
     public function viewAny(User $user)
     {
-        //
+       //
     }
 
     /**
@@ -30,7 +30,7 @@ class SalonPolicy
      */
     public function view(User $user, Salon $salon)
     {
-        //
+        return $user->id === $salon->user_id || $user->getRole->name === 'admin';
     }
 
     /**
@@ -41,7 +41,7 @@ class SalonPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->getRole->name === 'admin' || $user->getRole->name === 'manager';
     }
 
     /**
@@ -53,7 +53,7 @@ class SalonPolicy
      */
     public function update(User $user, Salon $salon)
     {
-        //
+        return $user->id === $salon->user_id || $user->getRole->name === 'admin';
     }
 
     /**
@@ -65,7 +65,7 @@ class SalonPolicy
      */
     public function delete(User $user, Salon $salon)
     {
-        //
+        return $user->getRole->name === 'admin';
     }
 
     /**
@@ -77,7 +77,7 @@ class SalonPolicy
      */
     public function restore(User $user, Salon $salon)
     {
-        //
+        return $user->getRole->name === 'admin';
     }
 
     /**

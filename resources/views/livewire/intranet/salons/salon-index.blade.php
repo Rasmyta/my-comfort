@@ -7,9 +7,8 @@
     <div class="flex mb-3 justify-between items-center">
         <div class="flex space-x-4 items-center">
             <x-input.search wire:model="filters.search" placeholder="Buscar..." />
-
             <div>
-                @if (Route::has('intranet.salons.index'))
+                @if (Route::has('intranet.salons.index') && auth()->user()->getRole->name == 'admin')
                     <div
                         class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                         <input wire:click="toggleShowNewSalons" type="checkbox" name="toggle" id="toggle"
@@ -21,10 +20,8 @@
                         class="text-purple-600 text-sm font-medium leading-5 m-0">{{ __('Nuevos') }}</label>
                 @endif
             </div>
-
             <x-button.link wire:click="toggleShowFilters">
-                @if ($showFilters) Ocultar @endif Búsqueda
-                Avanzada...
+                @if ($showFilters) Ocultar @endif Búsqueda Avanzada...
             </x-button.link>
         </div>
         <div class="space-x-2 flex items-center">
@@ -128,17 +125,20 @@
                                 <x-button.link wire:click="edit({{ $salon->id }})" aria-label="Edit">
                                     <x-icon.edit></x-icon.edit>
                                 </x-button.link>
-                                <x-button.link wire:click="delete({{ $salon->id }})" aria-label="Delete">
-                                    <x-icon.trash></x-icon.trash>
-                                </x-button.link>
+                                @can('delete', $salon)
+                                    <x-button.link wire:click="delete({{ $salon->id }})" aria-label="Delete">
+                                        <x-icon.trash></x-icon.trash>
+                                    </x-button.link>
+                                @endcan
                                 <a href="{{ route('intranet.salon.show', [$salon->id]) }}">
                                     <x-button.link aria-label="View">
                                         <x-icon.view></x-icon.view>
                                     </x-button.link>
                                 </a>
-                                @if ($this->showNewSalons)
-                                    <x-button.primary wire:click="generateAccess({{ $salon->id }})">
-                                        {{ __('Generar Acceso') }}</x-button.primary>
+                                @if (auth()->user()->getRole->name == 'admin')
+                                    @if ($salon->getManager->password == '')
+                                        <x-button.link wire:click="generateAccess({{ $salon->id }})"><x-icon.key></x-icon.key></x-button.link>
+                                    @endif
                                 @endif
                             </div>
                         </x-table.cell>
@@ -152,8 +152,7 @@
                             @if (isset($salon->getManager))
                                 <x-button.link>{{ $salon->getManager->name }}</x-button.link>
                             @else
-                                <x-button.primary wire:click="asignUser({{ $salon->id }})">
-                                    {{ __('Asignar gestor') }}</x-button.primary>
+                                <x-button.primary></x-button.primary>
                             @endif
                         </x-table.cell>
                         <x-table.cell>
@@ -188,24 +187,26 @@
 
     <!-- Generate Access -->
     <div>
-        <form wire:submit.prevent="saveGenerateAccess">
-            <x-modal.dialog wire:model.defer="showGenerateAccessModal">
-                <x-slot name="title">{{ $titleModal }}</x-slot>
-                <x-slot name="content">
-                    <x-input.group for="email" label="Email de gestor">
-                         @if (isset($manager)) <x-input.text id="email" value="{{ $manager->email }}" readonly></x-input.text>  @endif
-                    </x-input.group>
-                    <x-input.group for="password" label="Contraseña" :error="$errors->first('password')">
-                        <x-input.text wire:model="password" id="password" autofocus/>
-                    </x-input.group>
-                </x-slot>
-                <x-slot name="footer">
-                    <x-button.secondary wire:click="$set('showGenerateAccessModal', false)">{{ __('Cancelar') }}
-                    </x-button.secondary>
-                    <x-button.primary type="submit">{{ __('Enviar') }}</x-button.primary>
-                </x-slot>
-            </x-modal.dialog>
-        </form>
+        @if ($showGenerateAccessModal)
+            <form wire:submit.prevent="saveGenerateAccess">
+                <x-modal.dialog wire:model.defer="showGenerateAccessModal">
+                    <x-slot name="title">{{ $titleModal }}</x-slot>
+                    <x-slot name="content">
+                        <x-input.group for="email" label="Email de gestor">
+                            @if (isset($manager)) <x-input.text id="email" value="{{ $manager->email }}" readonly></x-input.text>  @endif
+                        </x-input.group>
+                        <x-input.group for="password" label="Contraseña" :error="$errors->first('password')">
+                            <x-input.text wire:model="password" id="password" autofocus/>
+                        </x-input.group>
+                    </x-slot>
+                    <x-slot name="footer">
+                        <x-button.secondary wire:click="$set('showGenerateAccessModal', false)">{{ __('Cancelar') }}
+                        </x-button.secondary>
+                        <x-button.primary type="submit">{{ __('Enviar') }}</x-button.primary>
+                    </x-slot>
+                </x-modal.dialog>
+            </form>
+        @endif
     </div>
 
     <!-- Update / Create Modal -->
