@@ -7,14 +7,16 @@ use App\Http\Livewire\Traits\WithBulkActions;
 use App\Models\Category;
 use App\Models\Salon;
 use App\Models\Service;
+use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ServiceIndex extends Component
 {
-    use WithPagination, WithSorting, WithBulkActions;
+    use WithPagination, WithSorting, WithBulkActions, AuthorizesRequests;
 
     public $search = "";
     public $deleteId = "";
@@ -62,21 +64,32 @@ class ServiceIndex extends Component
     public function render()
     {
         return view('livewire.intranet.services.service-index', ['services' => $this->rows, 'salons' => $this->salons])
-                ->layout('layouts.intranet');
+            ->layout('layouts.intranet');
     }
 
     public function getRowsQueryProperty()
     {
-        $query = Service::query()
-            ->when($this->filters['search'], fn ($query, $search) => $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%'))
-            ->when($this->filters['duration-min'], fn ($query, $duration) => $query->where('duration', '>=', $duration))
-            ->when($this->filters['duration-max'], fn ($query, $duration) => $query->where('duration', '<=', $duration))
-            ->when($this->filters['price-min'], fn ($query, $price) => $query->where('price', '>=', $price))
-            ->when($this->filters['price-max'], fn ($query, $price) => $query->where('price', '<=', $price))
-            ->when($this->filters['category_id'], fn ($query, $category) => $query->where('category_id', $category))
-            ->when($this->filters['salon_id'], fn ($query, $salon) => $query->where('salon_id', $salon))
-            ->orderBy($this->sortField, $this->sortDirection);
-
+        if (Auth::user()->getRole->name === 'admin') {
+            $query = Service::query()
+                ->when($this->filters['search'], fn ($query, $search) => $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%'))
+                ->when($this->filters['duration-min'], fn ($query, $duration) => $query->where('duration', '>=', $duration))
+                ->when($this->filters['duration-max'], fn ($query, $duration) => $query->where('duration', '<=', $duration))
+                ->when($this->filters['price-min'], fn ($query, $price) => $query->where('price', '>=', $price))
+                ->when($this->filters['price-max'], fn ($query, $price) => $query->where('price', '<=', $price))
+                ->when($this->filters['category_id'], fn ($query, $category) => $query->where('category_id', $category))
+                ->when($this->filters['salon_id'], fn ($query, $salon) => $query->where('salon_id', $salon))
+                ->orderBy($this->sortField, $this->sortDirection);
+        }else{
+            $query = Service::query()
+                ->where('salon_id', Auth::user()->getSalon->id)
+                ->when($this->filters['search'], fn ($query, $search) => $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower($search) . '%'))
+                ->when($this->filters['duration-min'], fn ($query, $duration) => $query->where('duration', '>=', $duration))
+                ->when($this->filters['duration-max'], fn ($query, $duration) => $query->where('duration', '<=', $duration))
+                ->when($this->filters['price-min'], fn ($query, $price) => $query->where('price', '>=', $price))
+                ->when($this->filters['price-max'], fn ($query, $price) => $query->where('price', '<=', $price))
+                ->when($this->filters['category_id'], fn ($query, $category) => $query->where('category_id', $category))
+                ->orderBy($this->sortField, $this->sortDirection);
+        }
         return $this->applySorting($query);
     }
 
@@ -113,6 +126,7 @@ class ServiceIndex extends Component
 
     public function delete($id)
     {
+        $this->authorize('delete', Service::findOrFail($id));
         $this->showDeleteModal = true;
         $this->deleteId = $id;
     }
