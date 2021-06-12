@@ -50,10 +50,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'intranetRoles'], 'pr
     // Salons
     Route::get('salons', SalonIndex::class)->name('intranet.salons.index');
     Route::get('salon/{salon}', SalonShow::class)->name('intranet.salon.show');
-    // Users
-    Route::get('users', UserIndex::class)->name('intranet.users.index');
     // Services
     Route::get('services', ServiceIndex::class)->name('intranet.services.index');
     // Reservations
     Route::get('reservations', ReservationIndex::class)->name('intranet.reservations.index');
+    // Users
+    Route::get('users', UserIndex::class)->name('intranet.users.index')->middleware('role:admin');
 });

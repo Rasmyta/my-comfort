@@ -14,8 +14,6 @@
                     <span class="ml-4">{{ __('Dashboard') }}</span>
                 </x-button.responsive-nav-link>
                 </li>
-
-                {{-- Admin links --}}
                 <li class="relative px-6 py-3">
                     <x-button.responsive-nav-link href="{{ route('intranet.salons.index') }}" :active="request()->routeIs('intranet.salons.index')">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -32,16 +30,18 @@
                         <span class="ml-4">{{ __('Servicios') }}</span>
                     </x-button.responsive-nav-link>
                 </li>
-                <li class="relative px-6 py-3">
-                    <x-button.responsive-nav-link href="{{ route('intranet.users.index') }}" :active="request()->routeIs('intranet.users.index')">
-                        <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-                        </svg>
-                        <span class="ml-4">{{ __('Usuarios') }}</span>
-                    </x-button.responsive-nav-link>
-                </li>
 
-                {{-- Manager links --}}
+                @if (auth()->user()->getRole->name === 'admin')
+                    <li class="relative px-6 py-3">
+                        <x-button.responsive-nav-link href="{{ route('intranet.users.index') }}" :active="request()->routeIs('intranet.users.index')">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                            </svg>
+                            <span class="ml-4">{{ __('Usuarios') }}</span>
+                        </x-button.responsive-nav-link>
+                    </li>
+                @endif
+
                 <li class="relative px-6 py-3">
                     <x-button.responsive-nav-link href="{{ route('intranet.reservations.index') }}" :active="request()->routeIs('intranet.reservations.index')">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,14 +58,14 @@
                         <span class="ml-4">{{ __('Reseñas') }}</span>
                     </x-button.responsive-nav-link>
                 </li>
-                <li class="relative px-6 py-3">
+                {{-- <li class="relative px-6 py-3">
                     <x-button.responsive-nav-link href="{{ route('intranet.salon.show', [1]) }}" >
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                         </svg>
                         <span class="ml-4">{{ __('Sobre salón') }}</span>
                     </x-button.responsive-nav-link>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </aside>
