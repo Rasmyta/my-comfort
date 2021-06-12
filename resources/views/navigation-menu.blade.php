@@ -18,11 +18,16 @@
                         </x-jet-nav-link>
                     </div>
                 @endforeach
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('intranet') }}" class="text-red-600">
-                        {{ __('Intranet') }}
-                    </x-jet-nav-link>
-                </div>
+
+               @auth
+                    @if (auth()->user()->getRole->name === 'admin' || auth()->user()->getRole->name === 'manager')
+                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('intranet') }}" class="text-red-600">
+                            {{ __('Intranet') }}
+                        </x-jet-nav-link>
+                    </div>
+                    @endif
+               @endauth
             </div>
 
             <div class="flex justify-end flex-nowrap">
@@ -54,12 +59,11 @@
 
                         </div>
                     @endif
+                    <div class="hidden pr-6 py-4 sm:block">
+                        <a href="{{ route('create.salon') }}"
+                            class="ml-4 text-sm text-gray-700 underline">{{ __('Registra tu negocio') }}</a>
+                    </div>
                 @endguest
-                <div class="hidden pr-6 py-4 sm:block">
-                    <a href="{{ route('create.salon') }}"
-                        class="ml-4 text-sm text-gray-700 underline">{{ __('Registra tu negocio') }}</a>
-                </div>
-
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <!-- Teams Dropdown -->

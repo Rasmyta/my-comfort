@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\MainController;
-use App\Http\Livewire\Client\CartIndex;
 use App\Http\Livewire\Client\ReservationAvailability;
 use App\Http\Livewire\Client\SalonShow as ClientSalonShow;
 use App\Http\Livewire\Client\SalonsIndex;
@@ -45,7 +44,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 /**
  * INTRANET
  */
-Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'intranet'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'verified', 'intranetRoles'], 'prefix' => 'intranet'], function () {
     // Dashboards
     Route::get('/', AdminDashboard::class)->name('intranet');
     // Salons
