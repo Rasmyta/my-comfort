@@ -104,6 +104,10 @@ class ServiceIndex extends Component
         // If object has a key, then it is in the DB and we can safely overwrite it.
         if ($this->editing->getKey()) $this->editing = $this->makeBlankService();
 
+        if(isset(Auth::user()->getSalon)){
+            $this->editing->salon_id = Auth::user()->getSalon->id;
+        }
+
         $this->titleModal = "Crear Servicio";
         $this->showEditModal = true;
     }

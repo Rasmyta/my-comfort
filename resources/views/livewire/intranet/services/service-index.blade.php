@@ -3,7 +3,47 @@
         {{ __($title) }}
     </x-slot>
 
-    @include("intranet.actions")
+    <!-- Actions -->
+    <div class="flex mb-3 justify-between items-center">
+        <div class="flex space-x-4 items-center">
+            <x-input.search wire:model="filters.search" placeholder="Buscar..." />
+
+            <x-button.link wire:click="toggleShowFilters">
+                @if ($showFilters) Ocultar @endif Búsqueda Avanzada...
+            </x-button.link>
+        </div>
+        <div class="space-x-2 flex items-center">
+            <x-input.group borderless paddingless for="perPage" label="Por Página">
+                <x-input.select wire:model="perPage" id="perPage">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </x-input.select>
+            </x-input.group>
+            @if ($selected)
+                <div>
+                    <x-button.primary wire:click="exportSelected">
+                        <x-icon.download /> <span>{{ __('Exportar') }}</span>
+                    </x-button.primary>
+                </div>
+            @else
+                <div id="tooltipExport">
+                    <x-button.primary disabled>
+                        <x-icon.download /> <span>{{ __('Exportar') }}</span>
+                    </x-button.primary>
+                </div>
+            @endif
+
+            <div>
+                @can('create', App\Models\Service::class)
+                    <x-button.primary wire:click="create">
+                        <x-icon.plus></x-icon.plus> New
+                    </x-button.primary>
+                @endcan
+            </div>
+        </div>
+    </div>
+
 
     <!-- Advanced Search -->
     <div>
@@ -131,6 +171,10 @@
     <!-- Update / Create Modal -->
     <div>
         @if ($showEditModal)
+
+        {{-- TEST --}}
+    <x-notify.messages class="w-1/3"></x-notify.messages>
+
             <form wire:submit.prevent="save">
                 <x-modal.dialog wire:model.defer="showEditModal">
                     <x-slot name="title">{{ $titleModal }}</x-slot>
@@ -139,7 +183,7 @@
                             <x-input.text wire:model="editing.name" id="name" />
                         </x-input.group>
                         <x-input.group for="duration" label="Duración" :error="$errors->first('editing.duration')">
-                            <x-input.text wire:model="editing.duration" id="duration" />
+                            <x-input.text wire:model="editing.duration" id="duration" placeholder="hh.mm" />
                         </x-input.group>
                          <x-input.group for="category_id" label="Categoría" :error="$errors->first('editing.category_id')">
                             <x-input.select wire:model="editing.category_id" id="category_id">
@@ -152,7 +196,7 @@
                             <x-input.text wire:model="editing.subcategory" id="subcategory" />
                         </x-input.group>
                         <x-input.group for="price" label="Precio" :error="$errors->first('editing.price')">
-                            <x-input.text wire:model="editing.price" id="price" />
+                            <x-input.text wire:model="editing.price" id="price" placeholder="0.00 €" />
                         </x-input.group>
                         <x-input.group for="description" label="Descripción" :error="$errors->first('editing.description')">
                             <x-input.textarea wire:model="editing.description" id="description" />

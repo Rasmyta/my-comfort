@@ -27,11 +27,5 @@
                 </x-button.primary>
             </div>
         @endif
-        {{-- Modify visibility with policies
-             <div>
-                <x-button.primary wire:click="create">
-                    <x-icon.plus></x-icon.plus> New
-                </x-button.primary>
-             </div> --}}
     </div>
 </div>
