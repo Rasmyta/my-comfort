@@ -11,7 +11,7 @@ use Log;
 class CartController extends Controller
 {
 
-    public static function reserve($datetime)
+    public static function reserve($dateOutput, $timeOutput)
     {
         $cart = Cart::content();
         $salonId = '';
@@ -25,8 +25,8 @@ class CartController extends Controller
 
         $reservation->salon_id = $salonId;
         $reservation->user_id = auth()->id();
-        $reservation->date = $datetime;
-        $reservation->time = $datetime;
+        $reservation->date = $dateOutput;
+        $reservation->time = $timeOutput;
         $reservation->save();
 
         foreach ($cart as $item) {

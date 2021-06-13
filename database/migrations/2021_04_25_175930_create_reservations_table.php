@@ -16,7 +16,7 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->timestamp('time');
+            $table->time('time', $precision = 0);
             $table->foreignId('salon_id')->constrained('salons')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

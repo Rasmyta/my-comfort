@@ -11,7 +11,8 @@ use Log;
 class ReservationAvailability extends Component
 {
     public $salon;
-    public $dateOutput;
+    public $timeOutput; // asigns value from date-picker component
+    public $dateOutput; // asigns value from date-picker component
 
 
     public function mount(Salon $salon)
@@ -35,7 +36,7 @@ class ReservationAvailability extends Component
 
     public function reserve()
     {
-        CartController::reserve($this->dateOutput);
+        CartController::reserve($this->dateOutput, $this->timeOutput);
     }
 
 }

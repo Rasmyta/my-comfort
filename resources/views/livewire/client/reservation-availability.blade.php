@@ -1,4 +1,4 @@
-<div class="pt-8 pb-10 max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="pt-8 pb-10 max-w-6xl mx-auto sm:px-6 lg:px-8">
 
     <!-- Logo -->
     <div class="p-8 ">
@@ -12,7 +12,7 @@
     <x-notify.messages class="w-1/3"></x-notify.messages>
 
     <!-- Content -->
-    <div class="bg-white grid grid-cols-2 justify-between gap-6 mb-8 p-6 bg-white shadow-lg rounded-lg"
+    <div class="bg-white grid md:grid-cols-2 sm:grid-cols-1 justify-center mb-8 p-6 bg-white shadow-lg rounded-lg"
         style="min-height: 60vh;">
         @if (count(Cart::content()) != 0)
             <!-- DateTime Picker -->
@@ -67,7 +67,7 @@
     </div>
 
     <div class="text-center">
-        <a href="{{ url()->previous() }}">
+        <a href="{{ route('salon.show', [$salon->id]) }}">
             <x-button.primary><i class="fas fa-chevron-left"></i> Ir Atrás</x-button.primary>
         </a>
     </div>
