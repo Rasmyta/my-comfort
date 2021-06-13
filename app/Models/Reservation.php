@@ -15,11 +15,30 @@ class Reservation extends Model
      * @var array
      */
     protected $fillable = [
-        'date', 'time'
+        'date', 'time', 'salon_id', 'user_id'
     ];
+
+    public function getSalon()
+    {
+        return $this->belongsTo(Salon::class, 'salon_id');
+    }
+
+    public function getUser()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function getServices()
     {
         return $this->belongsToMany(Service::class, 'reservation_service', 'reservation_id', 'service_id');
+    }
+
+    public function getTotalTime()
+    {
+        $result = 0;
+        foreach ($this->getServices as $service) {
+            $result += $service->duration;
+        }
+        return $result;
     }
 }
