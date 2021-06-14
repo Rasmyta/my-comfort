@@ -52,15 +52,15 @@ class DatabaseSeeder extends Seeder
         Activity::create(['name' => 'Centro de Manicura']);
         Activity::create(['name' => 'Masajes']);
 
-        User::factory(5)->create(['role_id' => 3]); // managers
+        User::factory(6)->create(['role_id' => 3]); // managers
         User::factory(5)->create(['role_id' => 2]); // clients
 
-        Salon::factory(1)->create(['activity_id' => 1]);
-        Salon::factory(1)->create(['activity_id' => 2]);
-        Salon::factory(1)->create(['activity_id' => 3]);
-        Salon::factory(1)->create(['activity_id' => 4]);
-        Salon::factory(1)->create(['activity_id' => 5]);
-        Salon::factory(1)->create(['activity_id' => 6]);
+        Salon::factory(1)->create(['activity_id' => 1, 'user_id' => 2]);
+        Salon::factory(1)->create(['activity_id' => 2, 'user_id' => 3]);
+        Salon::factory(1)->create(['activity_id' => 3, 'user_id' => 4]);
+        Salon::factory(1)->create(['activity_id' => 4, 'user_id' => 5]);
+        Salon::factory(1)->create(['activity_id' => 5, 'user_id' => 6]);
+        Salon::factory(1)->create(['activity_id' => 6, 'user_id' => 7]);
 
         Timetable::factory()->create(['salon_id' => 1]);
         Timetable::factory()->create(['salon_id' => 2]);
