@@ -34,7 +34,7 @@
             data-flickity='{ "cellAlign": "left", "imagesLoaded": true,  "wrapAround": true, "fullscreen": true}'>
             @foreach ($images as $image)
                 <div class="gallery-cell">
-                    <img src="{{ Storage::url($image->path) }}" class=" sm:rounded-lg" alt="Salon image" />
+                    <img src="{{ Storage::disk('s3')->url($image->path) }}" class=" sm:rounded-lg" alt="Salon image" />
                 </div>
             @endforeach
         </div>
