@@ -52,8 +52,8 @@ class DatabaseSeeder extends Seeder
         Activity::create(['name' => 'Centro de Manicura']);
         Activity::create(['name' => 'Masajes']);
 
-        User::factory(5)->create(['role_id' => 2]); // clients
         User::factory(5)->create(['role_id' => 3]); // managers
+        User::factory(5)->create(['role_id' => 2]); // clients
 
         Salon::factory(1)->create(['activity_id' => 1]);
         Salon::factory(1)->create(['activity_id' => 2]);
