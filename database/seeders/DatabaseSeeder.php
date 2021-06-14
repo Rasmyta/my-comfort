@@ -55,14 +55,26 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create(['role_id' => 2]); // clients
         User::factory(5)->create(['role_id' => 3]); // managers
 
-        Timetable::factory()->create();
-
         Salon::factory(1)->create(['activity_id' => 1]);
         Salon::factory(1)->create(['activity_id' => 2]);
         Salon::factory(1)->create(['activity_id' => 3]);
         Salon::factory(1)->create(['activity_id' => 4]);
         Salon::factory(1)->create(['activity_id' => 5]);
         Salon::factory(1)->create(['activity_id' => 6]);
+
+        Timetable::factory()->create(['salon_id' => 1]);
+        Timetable::factory()->create(['salon_id' => 2]);
+        Timetable::factory()->create(['salon_id' => 3]);
+        Timetable::factory()->create(['salon_id' => 4]);
+        Timetable::factory()->create(['salon_id' => 5]);
+        Timetable::factory()->create(['salon_id' => 6]);
+
+        Salon::where('id', 1)->update(['timetable_id' => 1]);
+        Salon::where('id', 2)->update(['timetable_id' => 2]);
+        Salon::where('id', 3)->update(['timetable_id' => 3]);
+        Salon::where('id', 4)->update(['timetable_id' => 4]);
+        Salon::where('id', 5)->update(['timetable_id' => 5]);
+        Salon::where('id', 6)->update(['timetable_id' => 6]);
 
         Category::create(['name' => 'Peluquería', 'route_name' => 'peluqueria']);
         Category::create(['name' => 'Uñas', 'route_name' => 'unas']);

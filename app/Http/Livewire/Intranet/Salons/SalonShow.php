@@ -20,6 +20,7 @@ class SalonShow extends Component
     public $columns;
     public $images;
     public $newImages = [];
+    public $showForm = true;
     public SalonImage $salonImage;
     public Timetable $timetable;
 
@@ -51,7 +52,6 @@ class SalonShow extends Component
     {
         $this->title = $salon->name;
         $this->salon = $salon;
-        $this->columns = DB::getSchemaBuilder()->getColumnListing('timetables');
         $this->images = $salon->getImages;
 
         if(isset($salon->getTimetable)) $this->timetable = $salon->getTimetable;
@@ -86,10 +86,12 @@ class SalonShow extends Component
                 $this->salonImage->save();
 
                 $this->salonImage->update([
-                    'path' => Storage::disk('s3')->put('salons', $this->newImages)
+                    'path' => Storage::disk('s3')->put('salons', $image)
                 ]);
 
-                $this->emitSelf('image-saved');
+                $this->emit('image-saved');
+                $this->showForm = false;
+                $this->newImages = [];
             }
         }
     }

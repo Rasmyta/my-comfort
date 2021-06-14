@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Role;
 use App\Models\Salon;
 use App\Models\User;
+use DB;
 use Exception;
 use Illuminate\Http\Request;
 use Log;
@@ -23,11 +24,11 @@ class MainController extends Controller
         // to finish
         $validated = $request->validate([
             'name' => 'required',
-            'cif' => 'required',
-            'employees' => 'required|numeric|min:1',
+            'cif' => 'required|size:9',
+            'employees' => 'required|numeric',
             'address' => 'required',
             'city' => 'required',
-            'postal_code' => 'required|numeric',
+            'postal_code' => 'required|numeric|min:5',
             'activity_id' => 'required|numeric',
             //user data
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -55,6 +56,27 @@ class MainController extends Controller
             $salon->activity_id = $request->activity_id;
             $salon->user_id = $user->id;
             $salon->save();
+
+            // default timetable
+            $timetableId = DB::table('timetables')->insertGetId([
+                'monday_start' => '11:00',
+                'monday_end' => '20:00',
+                'tuesday_start' => '11:00',
+                'tuesday_end' => '20:00',
+                'wednesday_start' => '11:00',
+                'wednesday_end' => '20:00',
+                'thursday_start' => '11:00',
+                'thursday_end' => '20:00',
+                'friday_start' => '11:00',
+                'friday_end' => '20:00',
+                'saturday_start' => '11:00',
+                'saturday_end' => '20:00',
+                'salon_id' => $salon->id
+            ]);
+
+            $salon->timetable_id = $timetableId;
+            $salon->save();
+
         } catch (Exception $e) {
             Log::error("Error en BD: " . $e->getMessage());
         }
@@ -65,69 +87,4 @@ class MainController extends Controller
             ->with('message', 'Gracias por elegir nosotros! Nuestro equipo se pondrá en contacto contigo. Tus credenciales para conectar será enviados por email.');
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

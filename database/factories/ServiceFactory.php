@@ -22,7 +22,7 @@ class ServiceFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->company,
+            'name' => ucfirst(strtolower($this->faker->words(3, true))),
             'duration' => $this->faker->randomElement([1.3, 1, 0.3]),
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 10, 50),

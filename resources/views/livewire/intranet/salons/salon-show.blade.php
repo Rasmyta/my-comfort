@@ -126,25 +126,28 @@
         <!-- Buttons -->
         <div class="space-x-3 flex justify-center items-center">
             <x-notify.saved notify="image-saved" />
+            <span wire:loading wire:target="saveImages" class="bg-green-300 text-white py-2 px-4 border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out">{{ __('Guardando...') }}</span>
             @if ($newImages)
-                <x-button.primary wire:click.prevent="saveImages()">{{ __('Guardar') }}</x-button.primary>
+                <x-button.primary wire:click.prevent="saveImages()"  @click="event.target.style.display='none';">{{ __('Guardar') }}</x-button.primary>
             @endif
         </div>
 
         <!-- Upload New Photos -->
-        <form>
-            <x-input.group label="" for="newImages" inline="true" :error="$errors->first('newImages.*')">
-                <x-input.file-pond wire:model="newImages" multiple />
-            </x-input.group>
-        </form>
+        @if ($showForm)
+            <form>
+                <x-input.group label="" for="newImages" inline="true" :error="$errors->first('newImages.*')">
+                    <x-input.file-pond wire:model="newImages" multiple />
+                </x-input.group>
+            </form>
+        @endif
 
         <!-- Show All Photos -->
-        {{-- <div class="flex flex-wrap gap-1 justify-items-center justify-start">
+        <div class="flex flex-wrap gap-1 justify-items-center justify-start">
             @foreach ($images as $image)
                 <img src="{{ Storage::disk('s3')->url($image->path) }}" alt="Salon image"
                     class="max-w-28 h-20 md:max-w-48 md:h-40" />
             @endforeach
-        </div> --}}
+        </div>
     </div>
 
 </div>

@@ -24,11 +24,8 @@ class SalonFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'cif' => $this->faker->randomElement(["A", "B", "C", "D", "E", "F", "G", "H", "K", "L", "M", "N", "P", "Q", "S"])
-                . $this->faker->numberBetween(10, 99)
-                . $this->faker->randomNumber(5, true)
-                . $this->faker->regexify('[A-Z]'),
+            'name' => $this->faker->company,
+            'cif' => $this->faker->vat,
             'employees' => $this->faker->randomDigitNotNull,
             'address' => $this->faker->streetAddress,
             'city' => $this->faker->city,
@@ -36,7 +33,6 @@ class SalonFactory extends Factory
             'description' => $this->faker->paragraph,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'timetable_id' => 1,
             'user_id' => 2,
             'activity_id' => 1,
         ];
