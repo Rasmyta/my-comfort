@@ -36874,8 +36874,11 @@ video {
   background-image: radial-gradient(circle farthest-corner at 10% 20%, #3e85ee 1.1%, #e389f0 43.7%, #f3c17c 89.7%);
 }
 
-#welcome-container {
+#welcome-image {
   background-image: url("../images/bg1.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.4;
 }
 
 /* This is to remove the arrow of select element in IE */

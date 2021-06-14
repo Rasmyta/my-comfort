@@ -9,8 +9,11 @@ $background-gradient: radial-gradient( circle farthest-corner at 10% 20%, rgba(6
 #app-container
     background-image: $background-gradient
 
-#welcome-container
-    background-image: url("../images/bg1.jpg")
+#welcome-image
+    background-image: url('../images/bg1.jpg')
+    background-size: contain
+    background-repeat: no-repeat
+    opacity: 0.4
 
 /* This is to remove the arrow of select element in IE */
 .weekDays select::-ms-expand
