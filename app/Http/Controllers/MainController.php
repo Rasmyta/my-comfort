@@ -32,6 +32,7 @@ class MainController extends Controller
             //user data
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['string', 'max:20'],
+            'password' => ['nullable']
         ]);
 
         try {
@@ -40,6 +41,7 @@ class MainController extends Controller
             $user->surname = $request->clientSurname;
             $user->email = $request->email;
             $user->phone = $request->phone;
+            $user->password = "";
             $user->role_id = Role::where('name', 'manager')->first()->id;
             $user->save();
 
