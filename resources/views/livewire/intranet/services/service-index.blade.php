@@ -171,10 +171,6 @@
     <!-- Update / Create Modal -->
     <div>
         @if ($showEditModal)
-
-        {{-- TEST --}}
-    <x-notify.messages class="w-1/3"></x-notify.messages>
-
             <form wire:submit.prevent="save">
                 <x-modal.dialog wire:model.defer="showEditModal">
                     <x-slot name="title">{{ $titleModal }}</x-slot>

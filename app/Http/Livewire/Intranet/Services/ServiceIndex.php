@@ -130,7 +130,6 @@ class ServiceIndex extends Component
 
     public function delete($id)
     {
-        $this->authorize('delete', Service::findOrFail($id));
         $this->showDeleteModal = true;
         $this->deleteId = $id;
     }

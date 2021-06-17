@@ -117,7 +117,7 @@ class SalonIndex extends Component
 
     public function save()
     {
-        $this->validate();
+        $this->validateOnly('editing.*');
         $this->editing->save();
         $this->showEditModal = false;
     }

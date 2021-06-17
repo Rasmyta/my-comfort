@@ -53,7 +53,7 @@ class SalonPolicy
      */
     public function update(User $user, Salon $salon)
     {
-        return $user->id === $salon->user_id || $user->getRole->name === 'admin';
+        return $user->id == $salon->user_id || $user->getRole->name === 'admin';
     }
 
     /**

@@ -21,7 +21,6 @@ class MainController extends Controller
 
     public function storeSalon(Request $request)
     {
-        // to finish
         $validated = $request->validate([
             'name' => 'required',
             'cif' => 'required|size:9',
@@ -79,6 +78,7 @@ class MainController extends Controller
 
         } catch (Exception $e) {
             Log::error("Error en BD: " . $e->getMessage());
+            return $e->getMessage();
         }
 
         Log::info("Salon insertado");
