@@ -80,7 +80,7 @@ class MainController extends Controller
 
         } catch (Exception $e) {
             Log::error("Error en BD: " . $e->getMessage());
-            return $e->getMessage();
+            // return $e->getMessage();
         }
 
         Log::info("Salon insertado");
